@@ -60,6 +60,7 @@ public class LoginWindow {
 	 */
 	public LoginWindow() {
 		initialize();
+		
 	}
 
 	private void initUser() {

@@ -31,9 +31,9 @@ public class Agenzia {
 	public ArrayList<ViaggioOrganizzato> listaViaggiOrganizzati = new ArrayList<ViaggioOrganizzato>(
 			0);
 
-	public ModelUtenti modelUtenti = new ModelUtenti(ModelUtenti.INIT_UTENTE);
-	public ModelUtenti modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
-	public ModelVoli modelVoli = new ModelVoli();
+	public ModelUtenti modelUtenti = null;
+	public ModelUtenti modelClienti = null;
+	public ModelVoli modelVoli = null;
 	// ArrayList<Operatore> listaOperatori = new ArrayList<Operatore>(0);
 
 	// gestione input/output su file
@@ -82,6 +82,9 @@ public class Agenzia {
 
 	public Agenzia() throws ClassNotFoundException, IOException {
 		initFiles();
+		modelUtenti = new ModelUtenti(ModelUtenti.INIT_UTENTE);
+		modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
+		modelVoli = new ModelVoli();
 		// TODO Auto-generated constructor stub
 	}
 
