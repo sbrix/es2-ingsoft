@@ -4,7 +4,6 @@ import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Modelli.ModelViaggiOrganizzati;
 
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -13,11 +12,8 @@ import java.awt.Insets;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 
 public class VistaGestioneViaggiOrganizzati extends JPanel {

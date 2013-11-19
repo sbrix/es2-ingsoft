@@ -2,6 +2,7 @@ package it.unipr.sbrix.esercizio2.Modelli;
 
 import java.lang.reflect.*;
 import java.util.*;
+
 import javax.swing.table.*;
 
 /**
@@ -25,8 +26,10 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	private static final long serialVersionUID = 7238366371814989727L;
 	protected List<T> modelData;
 	protected List<String> columnNames;
+	@SuppressWarnings("rawtypes")
 	protected Class[] columnClasses;
 	protected Boolean[] isColumnEditable;
+	@SuppressWarnings("rawtypes")
 	private Class rowClass = Object.class;
 	private boolean isModelEditable = true;
 
@@ -41,6 +44,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 * @param rowClass
 	 *            the class of row data to be added to the model
 	 */
+	@SuppressWarnings("rawtypes")
 	protected RowTableModel(Class rowClass) {
 		setRowClass(rowClass);
 	}
@@ -102,6 +106,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 * @param rowClass
 	 *            the class of row data to be added to the model
 	 */
+	@SuppressWarnings("rawtypes")
 	protected RowTableModel(List<T> modelData, List<String> columnNames,
 			Class rowClass) {
 		setDataAndColumnNames(modelData, columnNames);
@@ -136,6 +141,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 * @param rowClas
 	 *            the class of the row
 	 */
+	@SuppressWarnings("rawtypes")
 	protected void setRowClass(Class rowClass) {
 		this.rowClass = rowClass;
 	}
@@ -154,6 +160,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 *            the column being queried
 	 * @return the Class of the column being queried
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Class getColumnClass(int column) {
 		Class columnClass = null;
 
@@ -471,6 +478,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 * @exception ArrayIndexOutOfBoundsException
 	 *                if an invalid column was given
 	 */
+	@SuppressWarnings("rawtypes")
 	public void setColumnClass(int column, Class columnClass) {
 		columnClasses[column] = columnClass;
 		fireTableRowsUpdated(0, getRowCount() - 1);

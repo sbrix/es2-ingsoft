@@ -3,7 +3,6 @@ package it.unipr.sbrix.esercizio2.Modelli;
 import java.util.Arrays;
 
 import it.unipr.sbrix.esercizio2.ViaggioOrganizzato;
-import it.unipr.sbrix.esercizio2.Volo;
 
 @SuppressWarnings("unchecked")
 public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato> {

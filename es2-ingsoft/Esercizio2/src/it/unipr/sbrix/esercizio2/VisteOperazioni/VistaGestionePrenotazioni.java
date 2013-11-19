@@ -5,10 +5,8 @@ import it.unipr.sbrix.esercizio2.Utente;
 import it.unipr.sbrix.esercizio2.Modelli.ModelPrenotazioni;
 
 import javax.swing.JPanel;
-import javax.swing.JList;
 import javax.swing.JButton;
 
-import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -18,9 +16,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.ListSelectionModel;
-
 import java.awt.GridLayout;
 import java.awt.Component;
 

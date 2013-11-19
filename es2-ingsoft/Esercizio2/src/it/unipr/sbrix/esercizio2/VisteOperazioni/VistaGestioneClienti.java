@@ -1,11 +1,8 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
-import it.unipr.sbrix.esercizio2.Utente;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiCliente;
-import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiUtente;
-
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
@@ -18,7 +15,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 
@@ -28,9 +24,12 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
-import javax.swing.table.TableColumn;
 
 public class VistaGestioneClienti extends JPanel implements ActionListener {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8129663312121425389L;
 	private JTable table;
 	private ModelUtenti model;
 	private JPanel panelList = new JPanel();

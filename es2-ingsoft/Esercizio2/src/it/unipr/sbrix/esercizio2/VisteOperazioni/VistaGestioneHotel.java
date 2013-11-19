@@ -5,7 +5,6 @@ import it.unipr.sbrix.esercizio2.Modelli.ModelHotel;
 
 import javax.swing.JPanel;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -17,10 +16,7 @@ import javax.swing.JLabel;
 import java.awt.Component;
 
 import javax.swing.JButton;
-import javax.swing.JList;
 import javax.swing.JScrollPane;
-import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 
 public class VistaGestioneHotel extends JPanel {

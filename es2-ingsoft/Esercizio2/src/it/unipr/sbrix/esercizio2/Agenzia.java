@@ -43,7 +43,7 @@ public class Agenzia {
 	 */
 	public final static String pathRoot = new String(Agenzia.class
 			.getProtectionDomain().getCodeSource().getLocation().getPath())
-			+ File.separator + "data"+ File.separator;
+			+ File.separator + "data" + File.separator;
 	private final File rootDir = new File(pathRoot);
 
 	public int idGlobalePrenotazioni = 0;
