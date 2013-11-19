@@ -48,7 +48,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	public VistaGestioneUtenti(Agenzia agenzia) {
 
 		ag = agenzia;
-		modelUtenti = new ModelUtenti(agenzia, ModelUtenti.INIT_UTENTE);
+		modelUtenti = ag.modelUtenti;
 		/*
 		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }
 		 */
@@ -127,21 +127,9 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 			frameAggiungiUser.setVisible(true);
 		}
 		if (e.getSource() == btnRimuovi) {
-			int index = 0;
-			for (Utente i : ag.listaUtenti) {
-
-				if (i.getId() == (int) modelUtenti.getValueAt(
-						table.getSelectedRow(), 0)) {
-					ag.listaUtenti.remove(index);
-					ag.saveToFile(ag.fileUtenti, ag.listaUtenti);
-					modelUtenti.removeRowRange(table.getSelectedRow(),
-							table.getSelectedRow());
-					break;
-
-				}
-				index++;
-
-			}
+			modelUtenti.removeItem(
+					(int) modelUtenti.getValueAt(table.getSelectedRow(), 0),
+					table.getSelectedRow());
 
 		}
 

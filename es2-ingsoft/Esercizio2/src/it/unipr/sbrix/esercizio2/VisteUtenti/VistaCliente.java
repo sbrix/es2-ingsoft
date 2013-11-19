@@ -48,12 +48,11 @@ public class VistaCliente extends JFrame {
 		agenzia = ag;
 		personalID = id;
 		if (ag != null) {
-			for (Utente i : ag.listaUtenti) {
-				if (i.getId() == id) {
-					lblShowutente.setText(i.nome + " " + i.cognome);
-					break;
-				}
-			}
+			Utente i = (Utente) ag.modelClienti.getItem(personalID);
+
+			if (i != null)
+				lblShowutente.setText(i.nome + " " + i.cognome);
+
 		}
 		this.lblShowmode.setText("Utente");
 

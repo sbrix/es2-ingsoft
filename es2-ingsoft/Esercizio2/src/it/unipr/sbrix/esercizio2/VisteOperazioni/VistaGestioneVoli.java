@@ -88,8 +88,10 @@ public class VistaGestioneVoli extends JPanel {
 		panelButtons.add(btnAggiungi);
 		btnRimuovi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				model.removeItem((int) model.getValueAt(table.getSelectedRow(), 0));
-				model.removeRowRange(table.getSelectedRow(), table.getSelectedRow());
+				model.removeItem(
+						(int) model.getValueAt(table.getSelectedRow(), 0),
+						table.getSelectedRow());
+
 			}
 		});
 

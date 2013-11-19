@@ -9,6 +9,7 @@ public class Utente implements Serializable {
 	public static final int CLIENTE = 2;
 	private static final long serialVersionUID = 3705447070498719951L;
 	private int id;
+
 	public String nome = null;
 	public String cognome = null;
 	public String userName = null;
@@ -24,20 +25,22 @@ public class Utente implements Serializable {
 	Utente() {
 	};
 
-	public Utente(String nm, String cg, String un, String pw, Agenzia ag) {
+	public Utente(String nm, String cg, String un, String pw) {
 
 		nome = nm;
 		cognome = cg;
 		userName = un;
-		password = ag.passwordEncryptor.encryptPassword(pw);
+		password = Agenzia.passwordEncryptor.encryptPassword(pw);
 		userType = Utente.CLIENTE;
-		id = ag.idGlobaleUtenti++;
-		ag.saveToFile(ag.fileIdUtenti, ag.idGlobaleUtenti);
 
 	}
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getUserType() {

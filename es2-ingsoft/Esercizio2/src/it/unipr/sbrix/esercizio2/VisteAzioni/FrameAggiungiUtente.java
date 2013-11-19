@@ -71,7 +71,7 @@ public class FrameAggiungiUtente extends FrameAggiungiCliente {
 			Utente utente = new Utente(textFieldNome.getText().trim(),
 					textFieldCognome.getText().trim(), textFieldUsername
 							.getText().trim(), new String(
-							passwordField.getPassword()).trim(), agenzia);
+							passwordField.getPassword()).trim());
 			switch (choiceUserType.getSelectedItem()) {
 			case "Cliente": {
 				utente.setUserType(Utente.CLIENTE);
@@ -88,16 +88,7 @@ public class FrameAggiungiUtente extends FrameAggiungiCliente {
 			}
 			}
 
-			agenzia.listaUtenti.add(utente);
-			agenzia.saveToFile(agenzia.fileIdUtenti, agenzia.idGlobaleUtenti);
-			agenzia.saveToFile(agenzia.fileUtenti, agenzia.listaUtenti);
-			// list.setListData(agenzia.listaUtenti.toArray());
-			model.addRow(utente);
-			// model.initModel();
-
-			/*
-			 * panel.revalidate(); panel.repaint();
-			 */
+			model.addItem(utente);
 
 			JOptionPane.showMessageDialog(null, new JLabel("Utente inserito"));
 			setVisible(false);

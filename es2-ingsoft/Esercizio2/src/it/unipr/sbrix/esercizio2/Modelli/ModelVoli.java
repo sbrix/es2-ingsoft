@@ -29,6 +29,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 	private ArrayList<Volo> listaVoli = new ArrayList<Volo>(0);
 	private int idVoli = 0;
 	private FileInputStream idVoliIn = null;
+
 	public ModelVoli() {
 		super(Arrays.asList(COLUMN_NAMES));
 
@@ -143,7 +144,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 	}
 
 	@Override
-	public <T> void addItem(T item) {
+	public void addItem(Object item) {
 		Volo volo = (Volo) item;
 		volo.setId(getNewId());
 		listaVoli.add(volo);
@@ -154,18 +155,29 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 	}
 
 	@Override
-	public void removeItem(int id) {
+	public void removeItem(int id, int row) {
 		// TODO Auto-generated method stub
-		int index =  0;
-		for(Volo i:listaVoli){
-			if ( i.getId()==id) {
+		int index = 0;
+		for (Volo i : listaVoli) {
+			if (i.getId() == id) {
 				listaVoli.remove(index);
 				Agenzia.saveToFile(fileVoli, listaVoli);
 				break;
 			}
 			index++;
 		}
-		
+		removeRowRange(row, row);
+
+	}
+
+	@Override
+	public Object getItem(int id) {
+		// TODO Auto-generated method stub
+		for (Volo i : listaVoli) {
+			if (i.getId() == id)
+				return i;
+		}
+		return null;
 	}
 
 }

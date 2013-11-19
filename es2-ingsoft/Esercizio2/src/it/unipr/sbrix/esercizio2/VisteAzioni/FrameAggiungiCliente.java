@@ -144,13 +144,11 @@ public class FrameAggiungiCliente extends JFrame implements ActionListener {
 			Utente utente = new Utente(textFieldNome.getText().trim(),
 					textFieldCognome.getText().trim(), textFieldUsername
 							.getText().trim(), new String(
-							passwordField.getPassword()).trim(), agenzia);
+							passwordField.getPassword()).trim());
 
 			utente.setUserType(Utente.CLIENTE);
 
-			agenzia.listaUtenti.add(utente);
-			agenzia.saveToFile(agenzia.fileIdUtenti, agenzia.idGlobaleUtenti);
-			agenzia.saveToFile(agenzia.fileUtenti, agenzia.listaUtenti);
+			model.addItem(utente);
 
 			model.addRow(utente);
 			JOptionPane.showMessageDialog(null, new JLabel("Utente inserito"));

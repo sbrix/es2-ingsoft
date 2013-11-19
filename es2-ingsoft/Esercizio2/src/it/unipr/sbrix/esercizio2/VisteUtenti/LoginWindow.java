@@ -68,47 +68,43 @@ public class LoginWindow {
 		String name = new String(textFieldUsername.getText());
 		String pwd = new String(passwordField.getPassword());
 		boolean userFound = false;
+		int id = 0;
 
-		if (!agenzia.listaUtenti.isEmpty()) {
-			for (Utente i : agenzia.listaUtenti) {
-				if (i.userName.equals(name)
-						&& agenzia.passwordEncryptor.checkPassword(pwd.trim(),
-								i.password)) {
-					// vai schermata clienti
+		id = agenzia.modelUtenti.checkUserLogin(name, pwd);
+		if (id != -1) {
+			Utente utente = (Utente) agenzia.modelUtenti.getItem(id);
 
-					switch (i.getUserType()) {
-					case Utente.CLIENTE: {
-						userFound = true;
-						VistaCliente frameCliente = new VistaCliente(
-								i.getUserType(), i.getId(), agenzia);
+			switch (utente.getUserType()) {
+			case Utente.CLIENTE: {
+				userFound = true;
+				VistaCliente frameCliente = new VistaCliente(
+						utente.getUserType(), utente.getId(), agenzia);
 
-						frameCliente.setVisible(true);
-						frmLogin.setVisible(false);
-						break;
-					}
-					case Utente.OPERATORE: {
-						userFound = true;
-						VistaOperatore frameOp = new VistaOperatore(
-								i.getUserType(), i.getId(), agenzia);
-
-						frameOp.setVisible(true);
-						frmLogin.setVisible(false);
-						break;
-
-					}
-					case Utente.ADMIN: {
-						userFound = true;
-						VistaAdmin frameAdmin = new VistaAdmin(i.getUserType(),
-								i.getId(), agenzia);
-
-						frameAdmin.setVisible(true);
-						frmLogin.setVisible(false);
-
-					}
-					}
-
-				}
+				frameCliente.setVisible(true);
+				frmLogin.setVisible(false);
+				break;
 			}
+			case Utente.OPERATORE: {
+				userFound = true;
+				VistaOperatore frameOp = new VistaOperatore(
+						utente.getUserType(), utente.getId(), agenzia);
+
+				frameOp.setVisible(true);
+				frmLogin.setVisible(false);
+				break;
+
+			}
+			case Utente.ADMIN: {
+				userFound = true;
+				VistaAdmin frameAdmin = new VistaAdmin(utente.getUserType(),
+						utente.getId(), agenzia);
+
+				frameAdmin.setVisible(true);
+				frmLogin.setVisible(false);
+
+			}
+			}
+
 		}
 
 		if (!userFound) {
