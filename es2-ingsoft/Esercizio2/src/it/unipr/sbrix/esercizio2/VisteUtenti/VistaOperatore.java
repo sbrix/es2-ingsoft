@@ -2,7 +2,6 @@ package it.unipr.sbrix.esercizio2.VisteUtenti;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneClienti;
-import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneClientiTable;
 import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneHotel;
 import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneViaggiOrganizzati;
 import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneVoli;
@@ -19,14 +18,15 @@ public class VistaOperatore extends VistaCliente {
 	 */
 	private static final long serialVersionUID = -2492679810842288395L;
 
-	public VistaOperatore(final int userType, final int idOperatore, final Agenzia ag) {
+	public VistaOperatore(final int userType, final int idOperatore,
+			final Agenzia ag) {
 		super(userType, idOperatore, ag);
 
 		JButton btnGestioneClienti = new JButton("Gestione Clienti");
 		btnGestioneClienti.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelVista.removeAll();
-				panelVista.add(new VistaGestioneClientiTable(ag));
+				panelVista.add(new VistaGestioneClienti(ag));
 				panelVista.revalidate();
 				panelVista.repaint();
 			}
@@ -37,7 +37,8 @@ public class VistaOperatore extends VistaCliente {
 		btnGestioneHotel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelVista.removeAll();
-				panelVista.add(new VistaGestioneHotel(userType, idOperatore, ag));
+				panelVista
+						.add(new VistaGestioneHotel(userType, idOperatore, ag));
 				panelVista.revalidate();
 				panelVista.repaint();
 			}
@@ -48,7 +49,8 @@ public class VistaOperatore extends VistaCliente {
 		btnGestioneVoli.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelVista.removeAll();
-				panelVista.add(new VistaGestioneVoli(userType, idOperatore, ag));
+				panelVista
+						.add(new VistaGestioneVoli(userType, idOperatore, ag));
 				panelVista.revalidate();
 				panelVista.repaint();
 			}
@@ -60,7 +62,8 @@ public class VistaOperatore extends VistaCliente {
 		btnGestioneViaggiOrganizzati.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				panelVista.removeAll();
-				panelVista.add(new VistaGestioneViaggiOrganizzati(userType, idOperatore, ag));
+				panelVista.add(new VistaGestioneViaggiOrganizzati(userType,
+						idOperatore, ag));
 				panelVista.revalidate();
 				panelVista.repaint();
 			}

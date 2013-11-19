@@ -3,7 +3,6 @@
  */
 package it.unipr.sbrix.esercizio2.Modelli;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
@@ -20,7 +19,7 @@ public class ModelUtenti extends RowTableModel<Utente> {
 	 * 
 	 */
 	private static final long serialVersionUID = 7685749531695911088L;
-	private static String[] COLUMN_NAMES = { "Id", "Nome", "Cognome",
+	private final static String[] COLUMN_NAMES = { "Id", "Nome", "Cognome",
 			"Username", "Tipo" };
 	private Agenzia ag = null;
 	private int type;
@@ -32,7 +31,8 @@ public class ModelUtenti extends RowTableModel<Utente> {
 		super(Arrays.asList(COLUMN_NAMES));
 		ag = agenzia;
 		setRowClass(Utente.class);
-		setColumnClass(1, Integer.class);
+		setColumnClass(0, Integer.class);
+		setColumnClass(1, String.class);
 		setColumnClass(2, String.class);
 		setColumnClass(3, String.class);
 		setColumnClass(4, String.class);

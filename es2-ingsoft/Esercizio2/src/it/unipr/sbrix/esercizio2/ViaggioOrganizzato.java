@@ -15,6 +15,16 @@ public class ViaggioOrganizzato implements Serializable {
 	 */
 	private static final long serialVersionUID = -3650137362366764777L;
 
+	public ViaggioOrganizzato(Agenzia ag) {
+		id = ag.idGlobaleViaggiOrganizzati++;
+	}
+
+	private int id;
+
+	public int getId() {
+		return id;
+	}
+
 	Volo andata, ritorno;
 	Hotel hotel;
 	int durataPernottamento;

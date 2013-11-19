@@ -1,6 +1,8 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
+import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -17,11 +19,11 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JTable;
+import javax.swing.table.TableModel;
 
 public class VistaGestioneVoli extends JPanel {
 
-	
-	
 	/**
 	 * 
 	 */
@@ -31,10 +33,9 @@ public class VistaGestioneVoli extends JPanel {
 	private JPanel panelButtons = new JPanel();
 
 	private JButton btnRimuovi = new JButton("Rimuovi");
-	private final JLabel lblGestioneVoli = new JLabel(
-			"Gestione voli");
-	@SuppressWarnings("rawtypes")
-	private final JList list = new JList();
+	private final JLabel lblGestioneVoli = new JLabel("Gestione voli");
+	private ModelVoli model = new ModelVoli();
+	private final JTable table = new JTable(model);
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
@@ -48,7 +49,7 @@ public class VistaGestioneVoli extends JPanel {
 		setLayout(gridBagLayout);
 		GridBagConstraints gbc_panelLista = new GridBagConstraints();
 		gbc_panelLista.fill = GridBagConstraints.BOTH;
-		gbc_panelLista.insets = new Insets(0, 0, 0, 5);
+		gbc_panelLista.insets = new Insets(0, 0, 5, 5);
 		gbc_panelLista.gridx = 0;
 		gbc_panelLista.gridy = 0;
 		add(panelLista, gbc_panelLista);
@@ -56,16 +57,12 @@ public class VistaGestioneVoli extends JPanel {
 		lblGestioneVoli.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panelLista.add(lblGestioneVoli);
-		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setMinimumSize(new Dimension(780, 500));
-		scrollPane.setViewportView(list);
-		scrollPane.revalidate();
-		scrollPane.repaint();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 		panelLista.add(scrollPane);
+		scrollPane.setViewportView(table);
 
 		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
+		gbc_panelButtons.insets = new Insets(0, 0, 5, 0);
 		gbc_panelButtons.anchor = GridBagConstraints.NORTH;
 		gbc_panelButtons.gridx = 1;
 		gbc_panelButtons.gridy = 0;
@@ -82,6 +79,5 @@ public class VistaGestioneVoli extends JPanel {
 		this.setVisible(true);
 
 	}
-
 
 }

@@ -1,6 +1,8 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Modelli.ModelHotel;
+
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
@@ -19,6 +21,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JTable;
 
 public class VistaGestioneHotel extends JPanel {
 
@@ -35,10 +38,9 @@ public class VistaGestioneHotel extends JPanel {
 	private JPanel panelButtons = new JPanel();
 
 	private JButton btnRimuovi = new JButton("Rimuovi");
-	private final JLabel lblGestioneHotel = new JLabel(
-			"Gestione Hotel");
-	@SuppressWarnings("rawtypes")
-	private final JList list = new JList();
+	private final JLabel lblGestioneHotel = new JLabel("Gestione Hotel");
+	private final ModelHotel model = new ModelHotel();
+	private final JTable table = new JTable(model);
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
@@ -60,14 +62,9 @@ public class VistaGestioneHotel extends JPanel {
 		lblGestioneHotel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panelLista.add(lblGestioneHotel);
-		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane.setMinimumSize(new Dimension(780, 500));
-		scrollPane.setViewportView(list);
-		scrollPane.revalidate();
-		scrollPane.repaint();
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
 		panelLista.add(scrollPane);
+		scrollPane.setViewportView(table);
 
 		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
 		gbc_panelButtons.anchor = GridBagConstraints.NORTH;

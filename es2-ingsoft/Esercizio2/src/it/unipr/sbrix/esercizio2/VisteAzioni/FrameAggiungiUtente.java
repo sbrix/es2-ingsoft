@@ -2,6 +2,7 @@ package it.unipr.sbrix.esercizio2.VisteAzioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Utente;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
 
 import javax.swing.JPanel;
 import javax.swing.JLabel;
@@ -28,9 +29,9 @@ public class FrameAggiungiUtente extends FrameAggiungiCliente {
 	 * Create the frame.
 	 */
 	public FrameAggiungiUtente(final Agenzia ag_, final JPanel panel_,
-			@SuppressWarnings("rawtypes") final JList list_) {
+			ModelUtenti model_) {
 
-		super(ag_, panel_, list_);
+		super(ag_, panel_, model_);
 		this.setTitle("Aggiungi utente");
 
 		JLabel lblTipo = new JLabel("Tipo:");
@@ -90,9 +91,14 @@ public class FrameAggiungiUtente extends FrameAggiungiCliente {
 			agenzia.listaUtenti.add(utente);
 			agenzia.saveToFile(agenzia.fileIdUtenti, agenzia.idGlobaleUtenti);
 			agenzia.saveToFile(agenzia.fileUtenti, agenzia.listaUtenti);
-			list.setListData(agenzia.listaUtenti.toArray());
-			panel.revalidate();
-			panel.repaint();
+			// list.setListData(agenzia.listaUtenti.toArray());
+			model.addRow(utente);
+			// model.initModel();
+
+			/*
+			 * panel.revalidate(); panel.repaint();
+			 */
+
 			JOptionPane.showMessageDialog(null, new JLabel("Utente inserito"));
 			setVisible(false);
 

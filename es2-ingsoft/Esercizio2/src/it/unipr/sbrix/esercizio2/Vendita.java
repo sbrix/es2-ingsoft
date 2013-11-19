@@ -4,6 +4,11 @@ import java.io.Serializable;
 
 public class Vendita extends ViaggioOrganizzato implements Serializable {
 
+	public Vendita(Agenzia ag) {
+		super(ag);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 		return "Vendite [id=" + id + ", cliente=" + cliente.toString()

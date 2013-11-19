@@ -2,6 +2,7 @@ package it.unipr.sbrix.esercizio2.VisteAzioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Utente;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -34,14 +35,13 @@ public class FrameAggiungiCliente extends JFrame implements ActionListener {
 	protected JButton btnAggiungi;
 	protected Agenzia agenzia;
 	protected JPanel panel;
-	@SuppressWarnings("rawtypes")
-	protected JList list;
+	protected ModelUtenti model;
 
 	public FrameAggiungiCliente(final Agenzia ag, final JPanel panel_,
-			@SuppressWarnings("rawtypes") final JList list_) {
+			final ModelUtenti model_) {
 		agenzia = ag;
 		panel = panel_;
-		list = list_;
+		model = model_;
 		setTitle("Aggiungi cliente");
 		setResizable(false);
 		setBounds(100, 100, 473, 188);
@@ -140,7 +140,7 @@ public class FrameAggiungiCliente extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnAggiungi) {
-			System.out.println("action event");
+			// System.out.println("action event");
 			Utente utente = new Utente(textFieldNome.getText().trim(),
 					textFieldCognome.getText().trim(), textFieldUsername
 							.getText().trim(), new String(
@@ -152,15 +152,7 @@ public class FrameAggiungiCliente extends JFrame implements ActionListener {
 			agenzia.saveToFile(agenzia.fileIdUtenti, agenzia.idGlobaleUtenti);
 			agenzia.saveToFile(agenzia.fileUtenti, agenzia.listaUtenti);
 
-			ArrayList<Utente> listAppoggio = new ArrayList<Utente>(0);
-			for (Utente i : agenzia.listaUtenti) {
-				if (i.getUserType() == Utente.CLIENTE) {
-					listAppoggio.add(i);
-				}
-			}
-			list.setListData(listAppoggio.toArray());
-			panel.revalidate();
-			panel.repaint();
+			model.addRow(utente);
 			JOptionPane.showMessageDialog(null, new JLabel("Utente inserito"));
 			setVisible(false);
 

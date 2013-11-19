@@ -3,6 +3,11 @@ package it.unipr.sbrix.esercizio2;
 import java.io.Serializable;
 
 public class Prenotazione extends ViaggioOrganizzato implements Serializable {
+	public Prenotazione(Agenzia ag) {
+		super(ag);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Override
 	public String toString() {
 

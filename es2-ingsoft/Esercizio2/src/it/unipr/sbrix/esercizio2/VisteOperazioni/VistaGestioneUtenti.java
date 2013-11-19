@@ -1,56 +1,59 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Utente;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiUtente;
 
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
-import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JList;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.ListSelectionModel;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import java.awt.GridLayout;
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Enumeration;
+
+import javax.swing.JTable;
+import javax.swing.JScrollPane;
+import javax.swing.event.TableColumnModelListener;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 public class VistaGestioneUtenti extends JPanel implements ActionListener {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -7391320298284444080L;
-	@SuppressWarnings("rawtypes")
-	private JList list = null;
+	private JTable table;
+	private ModelUtenti modelUtenti;
 	private JPanel panelList = new JPanel();
 	private JPanel panelButtons = new JPanel();
 	private JButton btnAggiungi = null;
 	private JButton btnRimuovi = null;
-	private Agenzia ag = null;
 	private final JScrollPane scrollPane = new JScrollPane();
-
-	// private JScrollPane scrollPane = null;
+	private Agenzia ag = null;
 
 	/**
 	 * Create the panel.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public VistaGestioneUtenti(final Agenzia agenzia) {
+	public VistaGestioneUtenti(Agenzia agenzia) {
+
 		ag = agenzia;
+		modelUtenti = new ModelUtenti(agenzia, ModelUtenti.INIT_UTENTE);
+		/*
+		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }
+		 */
+
+		// setLayout(new GridLayout(1, 2, 0, 0));
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -75,21 +78,25 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 
 		panelList.add(scrollPane);
 
-		list = new JList(ag.listaUtenti.toArray());
+		add(panelList);
+		panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
-		scrollPane.setViewportView(list);
+		lblGestioneUtenti.setAlignmentX(Component.CENTER_ALIGNMENT);
+		panelList.add(lblGestioneUtenti);
+
+		panelList.add(scrollPane);
+
+		table = new JTable(modelUtenti);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		
+		// table.getColumnModel().getColumn(0).setPreferredWidth(50);
+		// table.getColumnModel().getColumn(0).setResizable(false);
+
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
+		scrollPane.setViewportView(table);
+
 		scrollPane.setMinimumSize(new Dimension(780, 500));
-		list.addListSelectionListener(new ListSelectionListener() {
-			public void valueChanged(ListSelectionEvent arg0) {
-
-				panelList.invalidate();
-				panelList.validate();
-				panelList.repaint();
-
-			}
-		});
-		list.setVisible(true);
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
 		gbc_panelButtons.anchor = GridBagConstraints.NORTH;
@@ -109,27 +116,30 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource() == btnAggiungi) {
 			// aggiunta di un utente alla lista utenti
 			JFrame frameAggiungiUser = new FrameAggiungiUtente(this.ag,
-					panelList, list);
+					panelList, modelUtenti);
 
 			frameAggiungiUser.setVisible(true);
 		}
 		if (e.getSource() == btnRimuovi) {
-			// rimuovi elementi selezionati
-			int tmp = list.getSelectedIndex();
-			if (tmp != -1) {
-				System.out.println(tmp);
-				ag.listaUtenti.remove(tmp);
-				ag.saveToFile(ag.fileUtenti, ag.listaUtenti);
-				list.setListData(ag.listaUtenti.toArray());
-				panelList.revalidate();
-				panelList.repaint();
+			int index = 0;
+			for (Utente i : ag.listaUtenti) {
+
+				if (i.getId() == (int) modelUtenti.getValueAt(
+						table.getSelectedRow(), 0)) {
+					ag.listaUtenti.remove(index);
+					ag.saveToFile(ag.fileUtenti, ag.listaUtenti);
+					modelUtenti.removeRowRange(table.getSelectedRow(),
+							table.getSelectedRow());
+					break;
+
+				}
+				index++;
 
 			}
 

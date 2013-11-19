@@ -2,7 +2,6 @@ package it.unipr.sbrix.esercizio2.VisteUtenti;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneUtenti;
-import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneUtentiTable;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -67,7 +66,8 @@ public class VistaAdmin extends VistaOperatore {
 	private void gestioneUtenti(Agenzia agenzia) {
 		// TODO Auto-generated method stub
 		panelVista.removeAll();
-		panelVista.add(new VistaGestioneUtentiTable(agenzia));//era VistaGestioneUtenti
+		panelVista.add(new VistaGestioneUtenti(agenzia));// era
+															// VistaGestioneUtenti
 		this.revalidate();
 		this.repaint();
 
