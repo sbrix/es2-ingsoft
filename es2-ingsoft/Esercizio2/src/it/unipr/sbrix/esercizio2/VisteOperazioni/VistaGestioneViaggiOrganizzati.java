@@ -56,7 +56,7 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 		lblGestioneViaggiOrganizzati.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panelLista.add(lblGestioneViaggiOrganizzati);
-		
+
 		panelLista.add(scrollPane);
 		scrollPane.setViewportView(table);
 

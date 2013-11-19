@@ -4,8 +4,13 @@ import java.util.Arrays;
 
 import it.unipr.sbrix.esercizio2.Hotel;
 
+@SuppressWarnings("unchecked")
 public class ModelHotel extends RowTableModel<Hotel> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2339574117133691992L;
 	private final static String[] COLUMN_NAMES = { "Id", "Nome", "Via",
 			"Città", "Nazione" };
 

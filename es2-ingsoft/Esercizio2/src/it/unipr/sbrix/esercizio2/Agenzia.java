@@ -1,5 +1,7 @@
 package it.unipr.sbrix.esercizio2;
 
+import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
+
 import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
@@ -10,6 +12,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Scanner;
+
 import org.jasypt.util.password.*;
 
 /**
@@ -20,12 +23,14 @@ public class Agenzia {
 	// creazione liste gestione agenzia
 	public ArrayList<Utente> listaUtenti = new ArrayList<Utente>(0);
 	public ArrayList<Hotel> listaHotel = new ArrayList<Hotel>(0);
-	public ArrayList<Volo> listaVoli = new ArrayList<Volo>(0);
+
 	public ArrayList<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>(
 			0);
 	public ArrayList<Vendita> listaVendite = new ArrayList<Vendita>(0);
 	public ArrayList<ViaggioOrganizzato> listaViaggiOrganizzati = new ArrayList<ViaggioOrganizzato>(
 			0);
+
+	public ModelVoli modelVoli = new ModelVoli();
 	// ArrayList<Operatore> listaOperatori = new ArrayList<Operatore>(0);
 
 	// gestione input/output su file
@@ -33,7 +38,7 @@ public class Agenzia {
 	 * private final String pathRoot = File.separator + "esercizio1" +
 	 * File.separator + "data" + File.separator;
 	 */
-	private final String pathRoot = Agenzia.class.getProtectionDomain()
+	public final static String pathRoot = Agenzia.class.getProtectionDomain()
 			.getCodeSource().getLocation().getPath();
 	private final File rootDir = new File(pathRoot);
 
@@ -46,7 +51,7 @@ public class Agenzia {
 
 	public final File fileUtenti = new File(pathRoot + "utenti.dat");
 	public final File fileHotel = new File(pathRoot + "hotel.dat");
-	public final File fileVoli = new File(pathRoot + "voli.dat");
+
 	public final File filePrenotazioni = new File(pathRoot + "prenotazioni.dat");
 	public final File fileVendite = new File(pathRoot + "vendite.dat");
 	public final File fileViaggiOrganizzati = new File(pathRoot + "viaggi.dat");
@@ -60,7 +65,7 @@ public class Agenzia {
 
 	public FileInputStream utentiIn = null;
 	public FileInputStream hotelIn = null;
-	public FileInputStream voliIn = null;
+
 	public FileInputStream prenotazioniIn = null;
 	public FileInputStream venditeIn = null;
 	public FileInputStream viaggiIn = null;
@@ -71,7 +76,7 @@ public class Agenzia {
 
 	public FileOutputStream utentiOut = null;
 	public FileOutputStream hotelOut = null;
-	public FileOutputStream voliOut = null;
+
 	public FileOutputStream prenotazioniOut = null;
 	public FileOutputStream venditeOut = null;
 	public FileOutputStream viaggiOut = null;
@@ -128,10 +133,7 @@ public class Agenzia {
 
 			fileHotel.createNewFile();
 		}
-		if (!fileVoli.exists()) {
 
-			fileVoli.createNewFile();
-		}
 		if (!filePrenotazioni.exists()) {
 
 			filePrenotazioni.createNewFile();
@@ -173,7 +175,7 @@ public class Agenzia {
 
 		utentiIn = new FileInputStream(fileUtenti);
 		hotelIn = new FileInputStream(fileHotel);
-		voliIn = new FileInputStream(fileVoli);
+
 		prenotazioniIn = new FileInputStream(filePrenotazioni);
 		venditeIn = new FileInputStream(fileVendite);
 		viaggiIn = new FileInputStream(fileViaggiOrganizzati);
@@ -204,14 +206,6 @@ public class Agenzia {
 			objInputStream.close();
 		} catch (EOFException e) {
 			System.out.println("file hotel vuoto");
-		}
-
-		try {
-			objInputStream = new ObjectInputStream(voliIn);
-			listaVoli = (ArrayList<Volo>) objInputStream.readObject();
-			objInputStream.close();
-		} catch (EOFException e) {
-			System.out.println("file voli vuoto");
 		}
 
 		try {
@@ -281,7 +275,7 @@ public class Agenzia {
 
 	}
 
-	public Boolean saveToFile(File file, Object obj) {
+	public static Boolean saveToFile(File file, Object obj) {
 		try {
 			FileOutputStream outFile = new FileOutputStream(file);
 			ObjectOutputStream objOutputStream = new ObjectOutputStream(outFile);

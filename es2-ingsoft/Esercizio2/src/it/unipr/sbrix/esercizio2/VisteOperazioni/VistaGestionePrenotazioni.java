@@ -68,7 +68,7 @@ public class VistaGestionePrenotazioni extends JPanel {
 		lblGestionePrenotazioni.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panelLista.add(lblGestionePrenotazioni);
-		
+
 		panelLista.add(scrollPane);
 		scrollPane.setViewportView(table);
 

@@ -88,7 +88,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 
 		table = new JTable(modelUtenti);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		
+
 		// table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		// table.getColumnModel().getColumn(0).setResizable(false);
 

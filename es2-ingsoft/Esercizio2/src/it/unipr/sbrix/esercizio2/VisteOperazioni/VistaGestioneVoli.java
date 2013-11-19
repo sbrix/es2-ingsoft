@@ -3,6 +3,7 @@ package it.unipr.sbrix.esercizio2.VisteOperazioni;
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
 import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
+import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiVolo;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -13,6 +14,7 @@ import java.awt.Insets;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -21,6 +23,9 @@ import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaGestioneVoli extends JPanel {
 
@@ -34,14 +39,17 @@ public class VistaGestioneVoli extends JPanel {
 
 	private JButton btnRimuovi = new JButton("Rimuovi");
 	private final JLabel lblGestioneVoli = new JLabel("Gestione voli");
-	private ModelVoli model = new ModelVoli();
-	private final JTable table = new JTable(model);
+	private ModelVoli model = null;
+	private JTable table = null;
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
 	 * Create the panel.
 	 */
-	public VistaGestioneVoli(int uType, int id, Agenzia ag) {
+	public VistaGestioneVoli(int uType, int id, final Agenzia ag) {
+		model = ag.modelVoli;
+		table = new JTable(model);
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -69,8 +77,21 @@ public class VistaGestioneVoli extends JPanel {
 		add(panelButtons, gbc_panelButtons);
 
 		panelButtons.setLayout(new GridLayout(10, 1, 0, 0));
+		btnAggiungi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFrame frameAggiungiVolo = new FrameAggiungiVolo(ag,
+						panelLista, model);
+				frameAggiungiVolo.setVisible(true);
+			}
+		});
 
 		panelButtons.add(btnAggiungi);
+		btnRimuovi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				model.removeItem((int) model.getValueAt(table.getSelectedRow(), 0));
+				model.removeRowRange(table.getSelectedRow(), table.getSelectedRow());
+			}
+		});
 
 		panelButtons.add(btnRimuovi);
 

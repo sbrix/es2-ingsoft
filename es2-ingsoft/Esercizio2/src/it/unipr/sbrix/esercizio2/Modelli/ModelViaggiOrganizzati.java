@@ -3,8 +3,14 @@ package it.unipr.sbrix.esercizio2.Modelli;
 import java.util.Arrays;
 
 import it.unipr.sbrix.esercizio2.ViaggioOrganizzato;
+import it.unipr.sbrix.esercizio2.Volo;
 
+@SuppressWarnings("unchecked")
 public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2251662406643181544L;
 	private final static String[] COLUMN_NAMES = { "Id", "Partenza andata",
 			"Arrivo andata", "Durata Pernottamento", "Nome hotel", "Via Hotel",
 			"Città hotel", "Nazione hotel", "Partenza ritorno",
@@ -12,6 +18,7 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato> {
 
 	public ModelViaggiOrganizzati() {
 		super(Arrays.asList(COLUMN_NAMES));
+		setRowClass(ViaggioOrganizzato.class);
 		// TODO Auto-generated constructor stub
 	}
 

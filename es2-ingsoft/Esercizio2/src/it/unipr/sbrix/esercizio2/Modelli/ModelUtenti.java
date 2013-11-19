@@ -13,7 +13,7 @@ import it.unipr.sbrix.esercizio2.Utente;
  * 
  */
 @SuppressWarnings("unchecked")
-public class ModelUtenti extends RowTableModel<Utente> {
+public class ModelUtenti extends RowTableModel<Utente> implements InitModel {
 
 	/**
 	 * 
@@ -37,7 +37,7 @@ public class ModelUtenti extends RowTableModel<Utente> {
 		setColumnClass(3, String.class);
 		setColumnClass(4, String.class);
 		type = tipo;
-		this.initModel(tipo);
+		this.initModel();
 
 	}
 
@@ -68,7 +68,7 @@ public class ModelUtenti extends RowTableModel<Utente> {
 		}
 	}
 
-	public void initModel(int tipoLista) {
+	public void initModel() {
 
 		if (this.getRowCount() > 0) {
 
@@ -89,6 +89,12 @@ public class ModelUtenti extends RowTableModel<Utente> {
 			}
 
 		}
+
+	}
+
+	@Override
+	public void initFromFile() {
+		// TODO Auto-generated method stub
 
 	}
 }

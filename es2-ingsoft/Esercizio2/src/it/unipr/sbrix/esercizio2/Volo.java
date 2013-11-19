@@ -12,9 +12,19 @@ public class Volo implements Serializable {
 	/**
 	 * 
 	 */
+
 	private static final long serialVersionUID = -5381232667756946635L;
-	int id;
-	String partenza;
-	String destinazione;
+	private int id;
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String partenza;
+	public String destinazione;
 
 }

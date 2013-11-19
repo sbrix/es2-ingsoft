@@ -19,6 +19,10 @@ import javax.swing.table.*;
  * 
  */
 abstract class RowTableModel<T> extends AbstractTableModel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7238366371814989727L;
 	protected List<T> modelData;
 	protected List<String> columnNames;
 	protected Class[] columnClasses;

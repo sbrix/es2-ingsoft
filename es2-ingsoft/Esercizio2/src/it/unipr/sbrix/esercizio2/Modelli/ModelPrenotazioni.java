@@ -4,11 +4,16 @@ import java.util.Arrays;
 
 import it.unipr.sbrix.esercizio2.Prenotazione;
 
+@SuppressWarnings("unchecked")
 public class ModelPrenotazioni extends RowTableModel<Prenotazione> {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -30781717066247948L;
 	private final static String[] COLUMN_NAMES = { "Id", "Partenza andata",
-		"Arrivo andata", "Durata Pernottamento", "Nome hotel", "Via Hotel",
-		"Città hotel", "Nazione hotel", "Partenza ritorno",
-		"Arrivo ritorno","Nome operatore","Nome cliente","Scadenza" };
+			"Arrivo andata", "Durata Pernottamento", "Nome hotel", "Via Hotel",
+			"Città hotel", "Nazione hotel", "Partenza ritorno",
+			"Arrivo ritorno", "Nome operatore", "Nome cliente", "Scadenza" };
 
 	public ModelPrenotazioni() {
 		super(Arrays.asList(COLUMN_NAMES));
