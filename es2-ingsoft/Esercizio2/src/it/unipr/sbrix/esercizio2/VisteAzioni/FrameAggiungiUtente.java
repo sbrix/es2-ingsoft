@@ -10,7 +10,6 @@ import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
-import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 
@@ -62,7 +61,6 @@ public class FrameAggiungiUtente extends FrameAggiungiCliente {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

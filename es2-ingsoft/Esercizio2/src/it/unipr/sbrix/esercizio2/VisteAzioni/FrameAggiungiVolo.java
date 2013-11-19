@@ -4,14 +4,10 @@ import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Volo;
 import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 
 import javax.swing.JLabel;
@@ -27,10 +23,16 @@ import java.awt.event.ActionEvent;
 
 public class FrameAggiungiVolo extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 435368945505380096L;
 	private JPanel contentPane;
 	private JTextField textFieldPartenza;
 	private JTextField textFieldDestinazione;
+	@SuppressWarnings("unused")
 	private Agenzia ag = null;
+	@SuppressWarnings("unused")
 	private JPanel panel = null;
 	private ModelVoli model = null;
 
