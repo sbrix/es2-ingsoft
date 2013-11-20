@@ -81,6 +81,7 @@ public class Agenzia {
 	public Scanner consoleInput = new Scanner(System.in);
 
 	public Agenzia() throws ClassNotFoundException, IOException {
+		rootDir.mkdirs();// creo la dir se non esiste
 		initFiles();
 		modelUtenti = new ModelUtenti(ModelUtenti.INIT_UTENTE);
 		modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
@@ -116,7 +117,7 @@ public class Agenzia {
 
 	@SuppressWarnings("unchecked")
 	void initFiles() throws IOException, ClassNotFoundException {
-		rootDir.mkdirs();// creo la dir se non esiste
+		
 
 		if (!fileHotel.exists()) {
 
