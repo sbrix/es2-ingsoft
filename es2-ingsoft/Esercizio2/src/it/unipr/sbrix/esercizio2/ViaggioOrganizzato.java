@@ -19,9 +19,11 @@ public class ViaggioOrganizzato implements Serializable {
 	public ViaggioOrganizzato(Agenzia ag) {
 		id = ag.idGlobaleViaggiOrganizzati++;
 	}
+
 	public int getId() {
 		return id;
 	}
+
 	@Override
 	public String toString() {
 		return "ViaggiOrganizzati [andata=" + andata.toString() + ", ritorno="

@@ -13,6 +13,7 @@ public class Hotel implements Serializable {
 	String via;
 	String citta;
 	String nazione;
+
 	@Override
 	public String toString() {
 		return "Hotel [nome=" + nome + ", via=" + via + ", citta=" + citta

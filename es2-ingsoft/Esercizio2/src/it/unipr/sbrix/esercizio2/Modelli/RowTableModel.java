@@ -24,6 +24,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7238366371814989727L;
+
 	/*
 	 * Convert an unformatted column name to a formatted column name. That is:
 	 * 
@@ -56,6 +57,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 
 		return buffer.toString().replaceAll("_", " ");
 	}
+
 	protected List<T> modelData;
 	protected List<String> columnNames;
 	@SuppressWarnings("rawtypes")

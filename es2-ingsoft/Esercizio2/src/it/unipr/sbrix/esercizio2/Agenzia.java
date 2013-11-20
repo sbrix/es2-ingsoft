@@ -132,7 +132,6 @@ public class Agenzia {
 
 	@SuppressWarnings("unchecked")
 	void initFiles() throws IOException, ClassNotFoundException {
-		
 
 		if (!fileHotel.exists()) {
 

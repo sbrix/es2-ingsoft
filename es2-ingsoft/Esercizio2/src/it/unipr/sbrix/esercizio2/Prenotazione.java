@@ -13,10 +13,12 @@ public class Prenotazione extends ViaggioOrganizzato implements Serializable {
 	Utente cliente;
 	int idOperatore;
 	long scadenza;
+
 	public Prenotazione(Agenzia ag) {
 		super(ag);
 		// TODO Auto-generated constructor stub
 	}
+
 	@Override
 	public String toString() {
 

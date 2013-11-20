@@ -146,7 +146,6 @@ public class FrameAggiungiCliente extends JFrame implements ActionListener {
 
 			model.addItem(utente);
 
-			
 			JOptionPane.showMessageDialog(null, new JLabel("Utente inserito"));
 			setVisible(false);
 

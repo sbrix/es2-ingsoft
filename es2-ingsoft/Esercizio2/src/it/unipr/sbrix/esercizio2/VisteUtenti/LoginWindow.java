@@ -49,6 +49,7 @@ public class LoginWindow {
 			}
 		});
 	}
+
 	private JFrame frmLogin;
 	private JTextField textFieldUsername;
 	private JPasswordField passwordField;
@@ -60,7 +61,7 @@ public class LoginWindow {
 	 */
 	public LoginWindow() {
 		initialize();
-		
+
 	}
 
 	/**
