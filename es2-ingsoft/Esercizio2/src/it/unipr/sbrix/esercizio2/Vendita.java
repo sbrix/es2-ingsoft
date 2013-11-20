@@ -4,11 +4,19 @@ import java.io.Serializable;
 
 public class Vendita extends ViaggioOrganizzato implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2808661019581646478L;
+
+	int id;
+
+	Utente cliente;
+	int idOperatore;
 	public Vendita(Agenzia ag) {
 		super(ag);
 		// TODO Auto-generated constructor stub
 	}
-
 	@Override
 	public String toString() {
 		return "Vendite [id=" + id + ", cliente=" + cliente.toString()
@@ -17,12 +25,4 @@ public class Vendita extends ViaggioOrganizzato implements Serializable {
 				+ ", ritorno=" + ritorno.toString() + ", operatore="
 				+ idOperatore + "]";
 	}
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2808661019581646478L;
-	int id;
-	Utente cliente;
-	int idOperatore;
 }

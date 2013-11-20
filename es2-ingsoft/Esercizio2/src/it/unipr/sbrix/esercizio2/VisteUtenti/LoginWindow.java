@@ -31,11 +31,6 @@ import java.io.IOException;
 
 public class LoginWindow {
 
-	private JFrame frmLogin;
-	private JTextField textFieldUsername;
-	private JPasswordField passwordField;
-	private Agenzia agenzia = null;
-
 	/**
 	 * Launch the application.
 	 */
@@ -54,6 +49,11 @@ public class LoginWindow {
 			}
 		});
 	}
+	private JFrame frmLogin;
+	private JTextField textFieldUsername;
+	private JPasswordField passwordField;
+
+	private Agenzia agenzia = null;
 
 	/**
 	 * Create the application.
@@ -61,59 +61,6 @@ public class LoginWindow {
 	public LoginWindow() {
 		initialize();
 		
-	}
-
-	private void initUser() {
-		// controllo se utente e cliente o operatore
-		// System.out.println("gestione login");
-		String name = new String(textFieldUsername.getText());
-		String pwd = new String(passwordField.getPassword());
-		boolean userFound = false;
-		int id = 0;
-
-		id = agenzia.modelUtenti.checkUserLogin(name, pwd);
-		if (id != -1) {
-			Utente utente = (Utente) agenzia.modelUtenti.getItem(id);
-
-			switch (utente.getUserType()) {
-			case Utente.CLIENTE: {
-				userFound = true;
-				VistaCliente frameCliente = new VistaCliente(
-						utente.getUserType(), utente.getId(), agenzia);
-
-				frameCliente.setVisible(true);
-				frmLogin.setVisible(false);
-				break;
-			}
-			case Utente.OPERATORE: {
-				userFound = true;
-				VistaOperatore frameOp = new VistaOperatore(
-						utente.getUserType(), utente.getId(), agenzia);
-
-				frameOp.setVisible(true);
-				frmLogin.setVisible(false);
-				break;
-
-			}
-			case Utente.ADMIN: {
-				userFound = true;
-				VistaAdmin frameAdmin = new VistaAdmin(utente.getUserType(),
-						utente.getId(), agenzia);
-
-				frameAdmin.setVisible(true);
-				frmLogin.setVisible(false);
-
-			}
-			}
-
-		}
-
-		if (!userFound) {
-			JOptionPane.showMessageDialog(null, new JLabel(
-					"Password o nome utente non valido"));
-			textFieldUsername.setText(null);
-			passwordField.setText(null);
-		}
 	}
 
 	/**
@@ -200,6 +147,59 @@ public class LoginWindow {
 				new FocusTraversalOnArray(
 						new Component[] { lblUsername, textFieldUsername,
 								lblPassword, passwordField, btnLogin }));
+	}
+
+	private void initUser() {
+		// controllo se utente e cliente o operatore
+		// System.out.println("gestione login");
+		String name = new String(textFieldUsername.getText());
+		String pwd = new String(passwordField.getPassword());
+		boolean userFound = false;
+		int id = 0;
+
+		id = agenzia.modelUtenti.checkUserLogin(name, pwd);
+		if (id != -1) {
+			Utente utente = (Utente) agenzia.modelUtenti.getItem(id);
+
+			switch (utente.getUserType()) {
+			case Utente.CLIENTE: {
+				userFound = true;
+				VistaCliente frameCliente = new VistaCliente(
+						utente.getUserType(), utente.getId(), agenzia);
+
+				frameCliente.setVisible(true);
+				frmLogin.setVisible(false);
+				break;
+			}
+			case Utente.OPERATORE: {
+				userFound = true;
+				VistaOperatore frameOp = new VistaOperatore(
+						utente.getUserType(), utente.getId(), agenzia);
+
+				frameOp.setVisible(true);
+				frmLogin.setVisible(false);
+				break;
+
+			}
+			case Utente.ADMIN: {
+				userFound = true;
+				VistaAdmin frameAdmin = new VistaAdmin(utente.getUserType(),
+						utente.getId(), agenzia);
+
+				frameAdmin.setVisible(true);
+				frmLogin.setVisible(false);
+
+			}
+			}
+
+		}
+
+		if (!userFound) {
+			JOptionPane.showMessageDialog(null, new JLabel(
+					"Password o nome utente non valido"));
+			textFieldUsername.setText(null);
+			passwordField.setText(null);
+		}
 	}
 
 }

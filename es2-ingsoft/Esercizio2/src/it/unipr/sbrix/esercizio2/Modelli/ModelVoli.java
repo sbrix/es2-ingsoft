@@ -40,6 +40,31 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 	}
 
 	@Override
+	public void addItem(Object item) {
+		Volo volo = (Volo) item;
+		volo.setId(getNewId());
+		listaVoli.add(volo);
+		addRow(volo);
+		Agenzia.saveToFile(fileVoli, listaVoli);
+		Agenzia.saveToFile(fileIdVoli, idVoli);
+
+	}
+
+	@Override
+	public Object getItem(int id) {
+		// TODO Auto-generated method stub
+		for (Volo i : listaVoli) {
+			if (i.getId() == id)
+				return i;
+		}
+		return null;
+	}
+
+	public int getNewId() {
+		return idVoli++;
+	}
+
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
 		Volo volo = getRow(rowIndex);
@@ -52,24 +77,6 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 			return volo.destinazione;
 		default:
 			return null;
-		}
-
-	}
-
-	public int getNewId() {
-		return idVoli++;
-	}
-
-	@Override
-	public void initModel() {
-		// TODO Auto-generated method stub
-		if (this.getRowCount() > 0) {
-
-			this.removeRows(this.getRowCount() - 1);
-
-		}
-		for (Volo i : listaVoli) {
-			this.addRow(i);
 		}
 
 	}
@@ -144,13 +151,16 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 	}
 
 	@Override
-	public void addItem(Object item) {
-		Volo volo = (Volo) item;
-		volo.setId(getNewId());
-		listaVoli.add(volo);
-		addRow(volo);
-		Agenzia.saveToFile(fileVoli, listaVoli);
-		Agenzia.saveToFile(fileIdVoli, idVoli);
+	public void initModel() {
+		// TODO Auto-generated method stub
+		if (this.getRowCount() > 0) {
+
+			this.removeRows(this.getRowCount() - 1);
+
+		}
+		for (Volo i : listaVoli) {
+			this.addRow(i);
+		}
 
 	}
 
@@ -168,16 +178,6 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 		}
 		removeRowRange(row, row);
 
-	}
-
-	@Override
-	public Object getItem(int id) {
-		// TODO Auto-generated method stub
-		for (Volo i : listaVoli) {
-			if (i.getId() == id)
-				return i;
-		}
-		return null;
 	}
 
 }

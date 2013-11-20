@@ -24,6 +24,38 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 7238366371814989727L;
+	/*
+	 * Convert an unformatted column name to a formatted column name. That is:
+	 * 
+	 * - insert a space when a new uppercase character is found, insert multiple
+	 * upper case characters are grouped together. - replace any "_" with a
+	 * space
+	 * 
+	 * @param columnName unformatted column name
+	 * 
+	 * @return the formatted column name
+	 */
+	public static String formatColumnName(String columnName) {
+		if (columnName.length() < 3)
+			return columnName;
+
+		StringBuffer buffer = new StringBuffer(columnName);
+		boolean isPreviousLowerCase = false;
+
+		for (int i = 1; i < buffer.length(); i++) {
+			boolean isCurrentUpperCase = Character
+					.isUpperCase(buffer.charAt(i));
+
+			if (isCurrentUpperCase && isPreviousLowerCase) {
+				buffer.insert(i, " ");
+				i++;
+			}
+
+			isPreviousLowerCase = !isCurrentUpperCase;
+		}
+
+		return buffer.toString().replaceAll("_", " ");
+	}
 	protected List<T> modelData;
 	protected List<String> columnNames;
 	@SuppressWarnings("rawtypes")
@@ -31,6 +63,7 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	protected Boolean[] isColumnEditable;
 	@SuppressWarnings("rawtypes")
 	private Class rowClass = Object.class;
+
 	private boolean isModelEditable = true;
 
 	/**
@@ -113,37 +146,18 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 		setRowClass(rowClass);
 	}
 
+	//
+	// Implement custom methods
+	//
 	/**
-	 * Reset the data and column names of the model.
+	 * Adds a row of data to the end of the model. Notification of the row being
+	 * added will be generated.
 	 * 
-	 * A fireTableStructureChanged event will be generated.
-	 * 
-	 * @param modelData
-	 *            the data of the table
-	 * @param columnNames
-	 *            <code>List</code> containing the names of the new columns
+	 * @param rowData
+	 *            data of the row being added
 	 */
-	protected void setDataAndColumnNames(List<T> modelData,
-			List<String> columnNames) {
-		this.modelData = modelData;
-		this.columnNames = columnNames;
-		columnClasses = new Class[getColumnCount()];
-		isColumnEditable = new Boolean[getColumnCount()];
-		fireTableStructureChanged();
-	}
-
-	/**
-	 * The class of the Row being stored in the TableModel
-	 * 
-	 * This is required for the getRowsAsArray() method to return the proper
-	 * class of row.
-	 * 
-	 * @param rowClas
-	 *            the class of the row
-	 */
-	@SuppressWarnings("rawtypes")
-	protected void setRowClass(Class rowClass) {
-		this.rowClass = rowClass;
+	public void addRow(T rowData) {
+		insertRow(getRowCount(), rowData);
 	}
 
 	//
@@ -206,56 +220,21 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	}
 
 	/**
-	 * Returns the number of rows in this table model.
-	 * 
-	 * @return the number of rows in the model
-	 */
-	public int getRowCount() {
-		return modelData.size();
-	}
-
-	/**
-	 * Returns true regardless of parameter values.
-	 * 
-	 * @param row
-	 *            the row whose value is to be queried
-	 * @param column
-	 *            the column whose value is to be queried
-	 * @return true
-	 */
-	public boolean isCellEditable(int row, int column) {
-		Boolean isEditable = null;
-
-		// Check is column editability has been set
-
-		if (column < isColumnEditable.length)
-			isEditable = isColumnEditable[column];
-
-		return (isEditable == null) ? isModelEditable : isEditable
-				.booleanValue();
-	}
-
-	//
-	// Implement custom methods
-	//
-	/**
-	 * Adds a row of data to the end of the model. Notification of the row being
-	 * added will be generated.
-	 * 
-	 * @param rowData
-	 *            data of the row being added
-	 */
-	public void addRow(T rowData) {
-		insertRow(getRowCount(), rowData);
-	}
-
-	/**
 	 * Returns the Object of the requested <code>row</code>.
 	 * 
 	 * @return the Object of the requested row.
 	 */
 	public T getRow(int row) {
 		return modelData.get(row);
+	}
+
+	/**
+	 * Returns the number of rows in this table model.
+	 * 
+	 * @return the number of rows in the model
+	 */
+	public int getRowCount() {
+		return modelData.size();
 	}
 
 	/**
@@ -330,6 +309,27 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 		}
 
 		insertRows(row, rowList);
+	}
+
+	/**
+	 * Returns true regardless of parameter values.
+	 * 
+	 * @param row
+	 *            the row whose value is to be queried
+	 * @param column
+	 *            the column whose value is to be queried
+	 * @return true
+	 */
+	public boolean isCellEditable(int row, int column) {
+		Boolean isEditable = null;
+
+		// Check is column editability has been set
+
+		if (column < isColumnEditable.length)
+			isEditable = isColumnEditable[column];
+
+		return (isEditable == null) ? isModelEditable : isEditable
+				.booleanValue();
 	}
 
 	/**
@@ -499,6 +499,25 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 	}
 
 	/**
+	 * Reset the data and column names of the model.
+	 * 
+	 * A fireTableStructureChanged event will be generated.
+	 * 
+	 * @param modelData
+	 *            the data of the table
+	 * @param columnNames
+	 *            <code>List</code> containing the names of the new columns
+	 */
+	protected void setDataAndColumnNames(List<T> modelData,
+			List<String> columnNames) {
+		this.modelData = modelData;
+		this.columnNames = columnNames;
+		columnClasses = new Class[getColumnCount()];
+		isColumnEditable = new Boolean[getColumnCount()];
+		fireTableStructureChanged();
+	}
+
+	/**
 	 * Set the ability to edit cell data for the entire model
 	 * 
 	 * Note: values set by the setColumnEditable(...) method will have prioritiy
@@ -511,36 +530,17 @@ abstract class RowTableModel<T> extends AbstractTableModel {
 		this.isModelEditable = isModelEditable;
 	}
 
-	/*
-	 * Convert an unformatted column name to a formatted column name. That is:
+	/**
+	 * The class of the Row being stored in the TableModel
 	 * 
-	 * - insert a space when a new uppercase character is found, insert multiple
-	 * upper case characters are grouped together. - replace any "_" with a
-	 * space
+	 * This is required for the getRowsAsArray() method to return the proper
+	 * class of row.
 	 * 
-	 * @param columnName unformatted column name
-	 * 
-	 * @return the formatted column name
+	 * @param rowClas
+	 *            the class of the row
 	 */
-	public static String formatColumnName(String columnName) {
-		if (columnName.length() < 3)
-			return columnName;
-
-		StringBuffer buffer = new StringBuffer(columnName);
-		boolean isPreviousLowerCase = false;
-
-		for (int i = 1; i < buffer.length(); i++) {
-			boolean isCurrentUpperCase = Character
-					.isUpperCase(buffer.charAt(i));
-
-			if (isCurrentUpperCase && isPreviousLowerCase) {
-				buffer.insert(i, " ");
-				i++;
-			}
-
-			isPreviousLowerCase = !isCurrentUpperCase;
-		}
-
-		return buffer.toString().replaceAll("_", " ");
+	@SuppressWarnings("rawtypes")
+	protected void setRowClass(Class rowClass) {
+		this.rowClass = rowClass;
 	}
 }

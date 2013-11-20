@@ -33,17 +33,6 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 		m_Components = components;
 	}
 
-	// //////////////////////////////////////////////////////////////////////////
-	//
-	// Utilities
-	//
-	// //////////////////////////////////////////////////////////////////////////
-	private int indexCycle(int index, int delta) {
-		int size = m_Components.length;
-		int next = (index + delta + size) % size;
-		return next;
-	}
-
 	private Component cycle(Component currentComponent, int delta) {
 		int index = -1;
 		loop: for (int i = 0; i < m_Components.length; i++) {
@@ -87,6 +76,10 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 		return cycle(component, -1);
 	}
 
+	public Component getDefaultComponent(Container container) {
+		return getFirstComponent(container);
+	}
+
 	public Component getFirstComponent(Container container) {
 		return m_Components[0];
 	}
@@ -95,7 +88,14 @@ public class FocusTraversalOnArray extends FocusTraversalPolicy {
 		return m_Components[m_Components.length - 1];
 	}
 
-	public Component getDefaultComponent(Container container) {
-		return getFirstComponent(container);
+	// //////////////////////////////////////////////////////////////////////////
+	//
+	// Utilities
+	//
+	// //////////////////////////////////////////////////////////////////////////
+	private int indexCycle(int index, int delta) {
+		int size = m_Components.length;
+		int next = (index + delta + size) % size;
+		return next;
 	}
 }

@@ -16,14 +16,8 @@ public class Utente implements Serializable {
 	public String password = null;
 	private int userType;
 
-	@Override
-	public String toString() {
-		return "ID=" + id + ", Nome=" + nome + ", Cognome=" + cognome
-				+ ", Username=" + userName + ", Tipo=" + userTypeToString();
-	}
-
 	Utente() {
-	};
+	}
 
 	public Utente(String nm, String cg, String un, String pw) {
 
@@ -33,22 +27,28 @@ public class Utente implements Serializable {
 		password = Agenzia.passwordEncryptor.encryptPassword(pw);
 		userType = Utente.CLIENTE;
 
-	}
+	};
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public int getUserType() {
 		return userType;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void setUserType(int userType) {
 		this.userType = userType;
+	}
+
+	@Override
+	public String toString() {
+		return "ID=" + id + ", Nome=" + nome + ", Cognome=" + cognome
+				+ ", Username=" + userName + ", Tipo=" + userTypeToString();
 	}
 
 	public String userTypeToString() {

@@ -23,19 +23,33 @@ import org.jasypt.util.password.*;
 public class Agenzia {
 	// creazione liste gestione agenzia
 
-	public ArrayList<Hotel> listaHotel = new ArrayList<Hotel>(0);
+	public static Boolean saveToFile(File file, Object obj) {
+		try {
+			FileOutputStream outFile = new FileOutputStream(file);
+			ObjectOutputStream objOutputStream = new ObjectOutputStream(outFile);
+			objOutputStream.writeObject(obj);
+			objOutputStream.flush();
+			objOutputStream.close();
+			return true;
+		} catch (IOException e) {
+			System.out.println("Errore scrittura file");
+			return false;
+		}
 
+	}
+
+	public ArrayList<Hotel> listaHotel = new ArrayList<Hotel>(0);
 	public ArrayList<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>(
 			0);
 	public ArrayList<Vendita> listaVendite = new ArrayList<Vendita>(0);
+
 	public ArrayList<ViaggioOrganizzato> listaViaggiOrganizzati = new ArrayList<ViaggioOrganizzato>(
 			0);
-
 	public ModelUtenti modelUtenti = null;
 	public ModelUtenti modelClienti = null;
+
 	public ModelVoli modelVoli = null;
 	// ArrayList<Operatore> listaOperatori = new ArrayList<Operatore>(0);
-
 	// gestione input/output su file
 	/*
 	 * private final String pathRoot = File.separator + "esercizio1" +
@@ -44,35 +58,36 @@ public class Agenzia {
 	public final static String pathRoot = new String(Agenzia.class
 			.getProtectionDomain().getCodeSource().getLocation().getPath())
 			+ File.separator + "data" + File.separator;
-	private final File rootDir = new File(pathRoot);
 
+	private final File rootDir = new File(pathRoot);
 	public int idGlobalePrenotazioni = 0;
 	public int idGlobaleVendite = 0;
+
 	public int idGlobaleViaggiOrganizzati = 0;
 
 	public static BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 
 	public final File fileHotel = new File(pathRoot + "hotel.dat");
-
 	public final File filePrenotazioni = new File(pathRoot + "prenotazioni.dat");
 	public final File fileVendite = new File(pathRoot + "vendite.dat");
-	public final File fileViaggiOrganizzati = new File(pathRoot + "viaggi.dat");
 
+	public final File fileViaggiOrganizzati = new File(pathRoot + "viaggi.dat");
 	// final File fileOperatori = new File(pathRoot + "operatori.dat");
 	public final File fileIdPrenotazioni = new File(pathRoot
 			+ "idPrenotazioni.dat");
 	public final File fileIdVendite = new File(pathRoot + "idVendite.dat");
+
 	public final File fileIdViaggiOrganizzati = new File(pathRoot
 			+ "idViaggiOrg.dat");
 
 	public FileInputStream hotelIn = null;
-
 	public FileInputStream prenotazioniIn = null;
 	public FileInputStream venditeIn = null;
-	public FileInputStream viaggiIn = null;
 
+	public FileInputStream viaggiIn = null;
 	public FileInputStream idPrenotazioniIn = null;
 	public FileInputStream idVenditeIn = null;
+
 	public FileInputStream idViaggiOrgIn = null;
 
 	public ObjectInputStream objInputStream = null;
@@ -231,21 +246,6 @@ public class Agenzia {
 		} catch (EOFException e) {
 			idGlobaleViaggiOrganizzati = 0;
 			System.out.println("file id viaggi organizzati vuoto");
-		}
-
-	}
-
-	public static Boolean saveToFile(File file, Object obj) {
-		try {
-			FileOutputStream outFile = new FileOutputStream(file);
-			ObjectOutputStream objOutputStream = new ObjectOutputStream(outFile);
-			objOutputStream.writeObject(obj);
-			objOutputStream.flush();
-			objOutputStream.close();
-			return true;
-		} catch (IOException e) {
-			System.out.println("Errore scrittura file");
-			return false;
 		}
 
 	}

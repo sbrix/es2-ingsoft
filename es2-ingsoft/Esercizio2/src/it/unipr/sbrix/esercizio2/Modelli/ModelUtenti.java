@@ -57,6 +57,45 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 	}
 
 	@Override
+	public void addItem(Object item) {
+		// TODO Auto-generated method stub
+		// inserire codice aggiunta oggetto
+		Utente utente = (Utente) item;
+		utente.setId(getNewID());
+		listaUtenti.add(utente);
+		Agenzia.saveToFile(fileIdUtenti, idGlobaleUtenti);
+		Agenzia.saveToFile(fileUtenti, listaUtenti);
+		addRow(utente);
+
+	}
+
+	public int checkUserLogin(String username, String password) {
+		for (Utente i : listaUtenti) {
+			if (i.userName.equals(username)
+					&& Agenzia.passwordEncryptor.checkPassword(password,
+							i.password))
+				return i.getId();
+		}
+		return -1;
+
+	}
+
+	@Override
+	public final Object getItem(int id) {
+		// TODO Auto-generated method stub
+		for (Utente i : listaUtenti) {
+			if (i.getId() == id)
+				return i;
+		}
+		return null;
+	}
+
+	private int getNewID() {
+		// TODO Auto-generated method stub
+		return idGlobaleUtenti++;
+	}
+
+	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 
 		Utente utente = getRow(rowIndex);
@@ -81,30 +120,6 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 		default:
 			return null;
 		}
-	}
-
-	public void initModel() {
-
-		if (this.getRowCount() > 0) {
-
-			this.removeRows(this.getRowCount() - 1);
-
-		}
-		if (type == ModelUtenti.INIT_UTENTE) {
-			for (Utente i : listaUtenti) {
-				this.addRow(i);
-			}
-
-		}
-		if (type == ModelUtenti.INIT_CLIENTE) {
-			for (Utente i : listaUtenti) {
-				if (i.getUserType() == Utente.CLIENTE)
-					this.addRow(i);
-
-			}
-
-		}
-
 	}
 
 	@Override
@@ -197,22 +212,28 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 	}
 
-	@Override
-	public void addItem(Object item) {
-		// TODO Auto-generated method stub
-		// inserire codice aggiunta oggetto
-		Utente utente = (Utente) item;
-		utente.setId(getNewID());
-		listaUtenti.add(utente);
-		Agenzia.saveToFile(fileIdUtenti, idGlobaleUtenti);
-		Agenzia.saveToFile(fileUtenti, listaUtenti);
-		addRow(utente);
+	public void initModel() {
 
-	}
+		if (this.getRowCount() > 0) {
 
-	private int getNewID() {
-		// TODO Auto-generated method stub
-		return idGlobaleUtenti++;
+			this.removeRows(this.getRowCount() - 1);
+
+		}
+		if (type == ModelUtenti.INIT_UTENTE) {
+			for (Utente i : listaUtenti) {
+				this.addRow(i);
+			}
+
+		}
+		if (type == ModelUtenti.INIT_CLIENTE) {
+			for (Utente i : listaUtenti) {
+				if (i.getUserType() == Utente.CLIENTE)
+					this.addRow(i);
+
+			}
+
+		}
+
 	}
 
 	@Override
@@ -233,26 +254,5 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 		}
 		removeRowRange(row, row);
-	}
-
-	public int checkUserLogin(String username, String password) {
-		for (Utente i : listaUtenti) {
-			if (i.userName.equals(username)
-					&& Agenzia.passwordEncryptor.checkPassword(password,
-							i.password))
-				return i.getId();
-		}
-		return -1;
-
-	}
-
-	@Override
-	public final Object getItem(int id) {
-		// TODO Auto-generated method stub
-		for (Utente i : listaUtenti) {
-			if (i.getId() == id)
-				return i;
-		}
-		return null;
 	}
 }
