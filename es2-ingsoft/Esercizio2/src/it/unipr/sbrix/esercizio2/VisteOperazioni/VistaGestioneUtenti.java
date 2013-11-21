@@ -45,7 +45,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	public VistaGestioneUtenti(Agenzia agenzia) {
 
 		ag = agenzia;
-		ag.modelUtenti = new ModelUtenti(ModelUtenti.INIT_UTENTE);
+		
 		modelUtenti = ag.modelUtenti;
 		/*
 		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }

@@ -1,6 +1,8 @@
 package it.unipr.sbrix.esercizio2;
 
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtenteListener;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtentiEvent;
 import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
 
 import java.io.EOFException;
@@ -101,6 +103,29 @@ public class Agenzia {
 		modelUtenti = new ModelUtenti(ModelUtenti.INIT_UTENTE);
 		modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
 		modelVoli = new ModelVoli();
+		modelUtenti.addListener(new ModelUtenteListener() {
+			
+			@Override
+			public void myEventOccurred(ModelUtentiEvent evt) {
+				// TODO Auto-generated method stub
+				modelClienti.removeRowRange(0, modelClienti.getRowCount()-1);
+				modelClienti.initFromFile();
+				modelClienti.initModel();
+				
+			}
+		});
+		
+		modelClienti.addListener(new ModelUtenteListener() {
+			
+			@Override
+			public void myEventOccurred(ModelUtentiEvent evt) {
+				// TODO Auto-generated method stub
+				modelUtenti.removeRowRange(0, modelUtenti.getRowCount()-1);
+				modelUtenti.initFromFile();
+				modelUtenti.initModel();
+				
+			}
+		});
 		// TODO Auto-generated constructor stub
 	}
 

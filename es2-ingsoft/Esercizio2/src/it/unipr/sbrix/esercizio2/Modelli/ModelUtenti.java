@@ -12,6 +12,8 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.event.EventListenerList;
+
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Utente;
 
@@ -35,6 +37,8 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 	public final File fileIdUtenti = new File(Agenzia.pathRoot + "idUtenti.dat");
 	private FileInputStream utentiIn = null;
 	private FileInputStream idUtentiIn = null;
+		
+	protected static EventListenerList listenerList = new EventListenerList();
 
 	private int type;
 	static public final int INIT_UTENTE = 0;
@@ -53,10 +57,13 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 		type = tipo;
 		this.initFromFile();
 		this.initModel();
+		
 
 	}
+	
+	
 
-	@Override
+	 @Override
 	public void addItem(Object item) {
 		// TODO Auto-generated method stub
 		// inserire codice aggiunta oggetto
@@ -66,10 +73,21 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 		Agenzia.saveToFile(fileIdUtenti, idGlobaleUtenti);
 		Agenzia.saveToFile(fileUtenti, listaUtenti);
 		addRow(utente);
+		this.fireUpdateEvent(new ModelUtentiEvent(this));
 
 	}
 
-	public int checkUserLogin(String username, String password) {
+	 public void addListener(ModelUtenteListener l) {
+	     listenerList.add(ModelUtenteListener.class, l);
+	 }
+
+
+	 // Notify all listeners that have registered interest for
+	 // notification on this event type.  The event instance
+	 // is lazily created using the parameters passed into
+	 // the fire method.
+
+	 public int checkUserLogin(String username, String password) {
 		for (Utente i : listaUtenti) {
 			if (i.userName.equals(username)
 					&& Agenzia.passwordEncryptor.checkPassword(password,
@@ -79,6 +97,21 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 		return -1;
 
 	}
+
+
+	protected void fireUpdateEvent(ModelUtentiEvent evt) {
+	     // Guaranteed to return a non-null array
+	     Object[] listeners = listenerList.getListenerList();
+	     // Process the listeners last to first, notifying
+	     // those that are interested in this event
+	     for (int i = listeners.length-2; i>=0; i-=2) {
+	         if (listeners[i]==ModelUtenteListener.class) {
+	             // Lazily create the event:
+	             
+	             ((ModelUtenteListener)listeners[i+1]).myEventOccurred(evt);
+	         }
+	     }
+	 }
 
 	@Override
 	public final Object getItem(int id) {
@@ -209,6 +242,7 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
 
 	}
 
@@ -246,13 +280,18 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 			if (i.getId() == id) {
 				listaUtenti.remove(index);
 				Agenzia.saveToFile(fileUtenti, listaUtenti);
-
+				removeRowRange(row, row);
+				this.fireUpdateEvent(new ModelUtentiEvent(this));
 				break;
 
 			}
 			index++;
 
 		}
-		removeRowRange(row, row);
+		
 	}
+
+	public void removeListener(ModelUtenteListener l) {
+	    listenerList.remove(ModelUtenteListener.class, l);
+	 }
 }

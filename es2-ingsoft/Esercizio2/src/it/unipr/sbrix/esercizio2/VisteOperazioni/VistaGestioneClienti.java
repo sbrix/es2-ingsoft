@@ -1,8 +1,11 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtenteListener;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
+import it.unipr.sbrix.esercizio2.Modelli.ModelUtentiEvent;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiCliente;
+
 import javax.swing.JPanel;
 
 import java.awt.Dimension;
@@ -45,13 +48,16 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 	public VistaGestioneClienti(Agenzia agenzia) {
 
 		ag = agenzia;
-		ag.modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
+		//ag.modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
 		model = ag.modelClienti;
+		
+		
 		/*
 		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }
 		 */
 
 		// setLayout(new GridLayout(1, 2, 0, 0));
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -124,7 +130,12 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 					table.getSelectedRow());
 
 		}
+		
+		
 
 	}
+
+	
+	
 
 }
