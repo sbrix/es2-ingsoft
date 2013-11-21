@@ -54,7 +54,7 @@ public class LoginWindow {
 	private JTextField textFieldUsername;
 	private JPasswordField passwordField;
 
-	private Agenzia agenzia = null;
+	private static Agenzia agenzia = null;
 
 	/**
 	 * Create the application.

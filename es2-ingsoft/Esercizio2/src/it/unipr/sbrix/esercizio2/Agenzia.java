@@ -108,7 +108,7 @@ public class Agenzia {
 			@Override
 			public void myEventOccurred(ModelUtentiEvent evt) {
 				// TODO Auto-generated method stub
-				modelClienti.removeRowRange(0, modelClienti.getRowCount()-1);
+				if(modelClienti.getRowCount()>0)modelClienti.removeRowRange(0, modelClienti.getRowCount()-1);
 				modelClienti.initFromFile();
 				modelClienti.initModel();
 				
@@ -120,7 +120,7 @@ public class Agenzia {
 			@Override
 			public void myEventOccurred(ModelUtentiEvent evt) {
 				// TODO Auto-generated method stub
-				modelUtenti.removeRowRange(0, modelUtenti.getRowCount()-1);
+				if (modelUtenti.getRowCount()>0)modelUtenti.removeRowRange(0, modelUtenti.getRowCount()-1);
 				modelUtenti.initFromFile();
 				modelUtenti.initModel();
 				
