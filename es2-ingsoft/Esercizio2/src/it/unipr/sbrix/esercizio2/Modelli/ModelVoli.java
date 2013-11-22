@@ -9,6 +9,8 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.event.EventListenerList;
+
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Volo;
 
@@ -29,6 +31,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 	private ArrayList<Volo> listaVoli = new ArrayList<Volo>(0);
 	private int idVoli = 0;
 	private FileInputStream idVoliIn = null;
+	protected static EventListenerList listenerList = new EventListenerList();
 
 	public ModelVoli() {
 		super(Arrays.asList(COLUMN_NAMES));
@@ -47,6 +50,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 		addRow(volo);
 		Agenzia.saveToFile(fileVoli, listaVoli);
 		Agenzia.saveToFile(fileIdVoli, idVoli);
+		fireUpdateEvent(new ModelEvent(this));
 
 	}
 
@@ -60,7 +64,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 		return null;
 	}
 
-	public int getNewId() {
+	private int getNewId() {
 		return idVoli++;
 	}
 
@@ -155,7 +159,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 		// TODO Auto-generated method stub
 		if (this.getRowCount() > 0) {
 
-			this.removeRows(this.getRowCount() - 1);
+			this.removeRowRange(0,this.getRowCount() - 1);
 
 		}
 		for (Volo i : listaVoli) {
@@ -177,7 +181,26 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 			index++;
 		}
 		removeRowRange(row, row);
+		fireUpdateEvent(new ModelEvent(this));
 
+	}
+
+	public void addUpdateEventListener(ModelListener listener) {
+		listenerList.add(ModelListener.class, listener);
+	}
+
+	public void removeMyEventListener(ModelListener listener) {
+		listenerList.remove(ModelListener.class, listener);
+	}
+
+	private void fireUpdateEvent(ModelEvent evt) {
+		Object[] listeners = listenerList.getListenerList();
+		System.out.println("update volo");
+		for (int i = 0; i < listeners.length; i = i + 2) {
+			if (listeners[i] == ModelListener.class) {
+				((ModelListener) listeners[i + 1]).updateEventOccurred(evt);
+			}
+		}
 	}
 
 }

@@ -2,7 +2,7 @@ package it.unipr.sbrix.esercizio2;
 
 import java.io.Serializable;
 
-public class Utente implements Serializable {
+public class Utente implements Serializable, Comparable<Utente> {
 
 	public static final int ADMIN = 0;
 	public static final int OPERATORE = 1;
@@ -65,5 +65,14 @@ public class Utente implements Serializable {
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	public int compareTo(Utente o) {
+		// TODO Auto-generated method stub
+		if (this.getId() > o.getId()) return 1;
+		if (this.getId() < o.getId()) return -1;
+		if (this.getId() == o.getId()) return 0;
+		return 0;
 	}
 }

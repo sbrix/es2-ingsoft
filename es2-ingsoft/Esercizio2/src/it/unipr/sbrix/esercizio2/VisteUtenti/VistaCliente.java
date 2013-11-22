@@ -42,8 +42,9 @@ public class VistaCliente extends JFrame {
 	 * Create the frame.
 	 */
 	public VistaCliente(int uType, int id, Agenzia ag) {
-		setResizable(false);
+		//setResizable(false);
 
+		setMinimumSize(new Dimension(1024, 600));
 		userType = uType;
 		agenzia = ag;
 		personalID = id;

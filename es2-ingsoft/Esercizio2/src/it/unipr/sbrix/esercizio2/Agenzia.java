@@ -1,9 +1,12 @@
 package it.unipr.sbrix.esercizio2;
 
+import it.unipr.sbrix.esercizio2.Modelli.ModelHotel;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtenteListener;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtenti;
 import it.unipr.sbrix.esercizio2.Modelli.ModelUtentiEvent;
 import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
+import it.unipr.sbrix.esercizio2.Modelli.ModelEvent;
+import it.unipr.sbrix.esercizio2.Modelli.ModelListener;
 
 import java.io.EOFException;
 import java.io.File;
@@ -40,17 +43,18 @@ public class Agenzia {
 
 	}
 
-	public ArrayList<Hotel> listaHotel = new ArrayList<Hotel>(0);
+	
 	public ArrayList<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>(
 			0);
 	public ArrayList<Vendita> listaVendite = new ArrayList<Vendita>(0);
 
 	public ArrayList<ViaggioOrganizzato> listaViaggiOrganizzati = new ArrayList<ViaggioOrganizzato>(
 			0);
+	
 	public ModelUtenti modelUtenti = null;
 	public ModelUtenti modelClienti = null;
-
 	public ModelVoli modelVoli = null;
+	public ModelHotel modelHotel = null;
 	// ArrayList<Operatore> listaOperatori = new ArrayList<Operatore>(0);
 	// gestione input/output su file
 	/*
@@ -69,7 +73,7 @@ public class Agenzia {
 
 	public static BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
 
-	public final File fileHotel = new File(pathRoot + "hotel.dat");
+	
 	public final File filePrenotazioni = new File(pathRoot + "prenotazioni.dat");
 	public final File fileVendite = new File(pathRoot + "vendite.dat");
 
@@ -82,7 +86,7 @@ public class Agenzia {
 	public final File fileIdViaggiOrganizzati = new File(pathRoot
 			+ "idViaggiOrg.dat");
 
-	public FileInputStream hotelIn = null;
+	
 	public FileInputStream prenotazioniIn = null;
 	public FileInputStream venditeIn = null;
 
@@ -103,30 +107,53 @@ public class Agenzia {
 		modelUtenti = new ModelUtenti(ModelUtenti.INIT_UTENTE);
 		modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
 		modelVoli = new ModelVoli();
-		modelUtenti.addListener(new ModelUtenteListener() {
-			
+		modelHotel = new ModelHotel();
+		modelUtenti.addUpdateEventListener(new ModelUtenteListener() {
+
 			@Override
-			public void myEventOccurred(ModelUtentiEvent evt) {
+			public void updateEventOccurred(ModelUtentiEvent evt) {
 				// TODO Auto-generated method stub
-				if(modelClienti.getRowCount()>0)modelClienti.removeRowRange(0, modelClienti.getRowCount()-1);
+				
 				modelClienti.initFromFile();
 				modelClienti.initModel();
+
+			}
+		});
+
+		modelClienti.addUpdateEventListener(new ModelUtenteListener() {
+
+			@Override
+			public void updateEventOccurred(ModelUtentiEvent evt) {
+				// TODO Auto-generated method stub
+				
+				modelUtenti.initFromFile();
+				modelUtenti.initModel();
+
+			}
+		});
+		
+		modelVoli.addUpdateEventListener(new ModelListener() {
+			
+			@Override
+			public void updateEventOccurred(ModelEvent evt) {
+				// TODO Auto-generated method stub
+				
+				modelVoli.initFromFile();
+				modelVoli.initModel();
 				
 			}
 		});
 		
-		modelClienti.addListener(new ModelUtenteListener() {
+		modelHotel.addUpdateEventListener(new ModelListener() {
 			
 			@Override
-			public void myEventOccurred(ModelUtentiEvent evt) {
+			public void updateEventOccurred(ModelEvent evt) {
 				// TODO Auto-generated method stub
-				if (modelUtenti.getRowCount()>0)modelUtenti.removeRowRange(0, modelUtenti.getRowCount()-1);
-				modelUtenti.initFromFile();
-				modelUtenti.initModel();
+				modelHotel.initFromFile();
+				modelHotel.initModel();
 				
 			}
-		});
-		// TODO Auto-generated constructor stub
+		});		// TODO Auto-generated constructor stub
 	}
 
 	private void controllaScadenzaPrenotazioni() {
@@ -158,10 +185,7 @@ public class Agenzia {
 	@SuppressWarnings("unchecked")
 	void initFiles() throws IOException, ClassNotFoundException {
 
-		if (!fileHotel.exists()) {
-
-			fileHotel.createNewFile();
-		}
+		
 
 		if (!filePrenotazioni.exists()) {
 
@@ -198,7 +222,7 @@ public class Agenzia {
 			fileIdViaggiOrganizzati.createNewFile();
 		}
 
-		hotelIn = new FileInputStream(fileHotel);
+		
 
 		prenotazioniIn = new FileInputStream(filePrenotazioni);
 		venditeIn = new FileInputStream(fileVendite);
@@ -210,13 +234,7 @@ public class Agenzia {
 
 		// inizializzo liste da file
 
-		try {
-			objInputStream = new ObjectInputStream(hotelIn);
-			listaHotel = (ArrayList<Hotel>) objInputStream.readObject();
-			objInputStream.close();
-		} catch (EOFException e) {
-			System.out.println("file hotel vuoto");
-		}
+		
 
 		try {
 			objInputStream = new ObjectInputStream(prenotazioniIn);

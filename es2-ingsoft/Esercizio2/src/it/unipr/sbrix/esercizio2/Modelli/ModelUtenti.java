@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.event.EventListenerList;
 
@@ -31,13 +32,13 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 	private static final long serialVersionUID = 7685749531695911088L;
 	private final static String[] COLUMN_NAMES = { "Id", "Nome", "Cognome",
 			"Username", "Tipo" };
-	private static ArrayList<Utente> listaUtenti = new ArrayList<Utente>(0);
+	private ArrayList<Utente> listaUtenti = new ArrayList<Utente>(0);
 	private int idGlobaleUtenti = 0;
 	public final File fileUtenti = new File(Agenzia.pathRoot + "utenti.dat");
 	public final File fileIdUtenti = new File(Agenzia.pathRoot + "idUtenti.dat");
 	private FileInputStream utentiIn = null;
 	private FileInputStream idUtentiIn = null;
-		
+
 	protected static EventListenerList listenerList = new EventListenerList();
 
 	private int type;
@@ -57,13 +58,10 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 		type = tipo;
 		this.initFromFile();
 		this.initModel();
-		
 
 	}
-	
-	
 
-	 @Override
+	@Override
 	public void addItem(Object item) {
 		// TODO Auto-generated method stub
 		// inserire codice aggiunta oggetto
@@ -77,17 +75,16 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 	}
 
-	 public void addListener(ModelUtenteListener l) {
-	     listenerList.add(ModelUtenteListener.class, l);
-	 }
+	public void addUpdateEventListener(ModelUtenteListener l) {
+		listenerList.add(ModelUtenteListener.class, l);
+	}
 
+	// Notify all listeners that have registered interest for
+	// notification on this event type. The event instance
+	// is lazily created using the parameters passed into
+	// the fire method.
 
-	 // Notify all listeners that have registered interest for
-	 // notification on this event type.  The event instance
-	 // is lazily created using the parameters passed into
-	 // the fire method.
-
-	 public int checkUserLogin(String username, String password) {
+	public int checkUserLogin(String username, String password) {
 		for (Utente i : listaUtenti) {
 			if (i.userName.equals(username)
 					&& Agenzia.passwordEncryptor.checkPassword(password,
@@ -98,20 +95,19 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 	}
 
-
 	protected void fireUpdateEvent(ModelUtentiEvent evt) {
-	     // Guaranteed to return a non-null array
-	     Object[] listeners = listenerList.getListenerList();
-	     // Process the listeners last to first, notifying
-	     // those that are interested in this event
-	     for (int i = listeners.length-2; i>=0; i-=2) {
-	         if (listeners[i]==ModelUtenteListener.class) {
-	             // Lazily create the event:
-	             
-	             ((ModelUtenteListener)listeners[i+1]).myEventOccurred(evt);
-	         }
-	     }
-	 }
+		// Guaranteed to return a non-null array
+		Object[] listeners = listenerList.getListenerList();
+		// Process the listeners last to first, notifying
+		// those that are interested in this event
+		for (int i = listeners.length - 2; i >= 0; i -= 2) {
+			if (listeners[i] == ModelUtenteListener.class) {
+				// Lazily create the event:
+
+				((ModelUtenteListener) listeners[i + 1]).updateEventOccurred(evt);
+			}
+		}
+	}
 
 	@Override
 	public final Object getItem(int id) {
@@ -214,6 +210,7 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 			// se lista vuota devo creare l accound admin di default
 			Utente admin = new Utente("admin", "admin", "admin", "admin");
 			admin.setUserType(Utente.ADMIN);
+			admin.setId(0);
 			listaUtenti.add(admin);
 			Agenzia.saveToFile(fileUtenti, listaUtenti);
 			System.out.println("Utente admin creato");
@@ -242,7 +239,15 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		Collections.sort(this.listaUtenti);
+		int index =0;
+		for (Utente i:listaUtenti){
+			i.setId(index);
+			index++;
+		}
+		this.idGlobaleUtenti=index;
+		Agenzia.saveToFile(fileUtenti, listaUtenti);
+		Agenzia.saveToFile(fileIdUtenti, this.idGlobaleUtenti);
 
 	}
 
@@ -250,7 +255,7 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 		if (this.getRowCount() > 0) {
 
-			this.removeRows(this.getRowCount() - 1);
+			this.removeRowRange(0,this.getRowCount() - 1);
 
 		}
 		if (type == ModelUtenti.INIT_UTENTE) {
@@ -288,10 +293,10 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 			index++;
 
 		}
-		
+
 	}
 
-	public void removeListener(ModelUtenteListener l) {
-	    listenerList.remove(ModelUtenteListener.class, l);
-	 }
+	public void removeUpdateEventListener(ModelUtenteListener l) {
+		listenerList.remove(ModelUtenteListener.class, l);
+	}
 }

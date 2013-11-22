@@ -8,11 +8,19 @@ public class Hotel implements Serializable {
 	 */
 	private static final long serialVersionUID = 6823533540175825734L;
 
-	int id;
-	String nome;
-	String via;
-	String citta;
-	String nazione;
+	private int id;
+	public String nome;
+
+	public String via;
+
+	public String citta;
+	public String nazione;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	@Override
 	public String toString() {

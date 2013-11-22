@@ -14,8 +14,4 @@ public class ModelUtentiEvent extends EventObject {
 	 */
 	private static final long serialVersionUID = -1744191456059967144L;
 
-	
-
-	
-
 }

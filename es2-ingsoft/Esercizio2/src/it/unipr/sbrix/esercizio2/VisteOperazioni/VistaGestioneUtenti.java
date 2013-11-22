@@ -31,7 +31,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	 */
 	private static final long serialVersionUID = -670602422396241177L;
 	private JTable table;
-	private ModelUtenti modelUtenti;
+	private ModelUtenti model;
 	private JPanel panelList = new JPanel();
 	private JPanel panelButtons = new JPanel();
 	private JButton btnAggiungi = null;
@@ -45,8 +45,8 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	public VistaGestioneUtenti(Agenzia agenzia) {
 
 		ag = agenzia;
-		
-		modelUtenti = ag.modelUtenti;
+
+		model = ag.modelUtenti;
 		/*
 		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }
 		 */
@@ -84,7 +84,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 
 		panelList.add(scrollPane);
 
-		table = new JTable(modelUtenti);
+		table = new JTable(model);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		// table.getColumnModel().getColumn(0).setPreferredWidth(50);
@@ -120,14 +120,17 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 		if (e.getSource() == btnAggiungi) {
 			// aggiunta di un utente alla lista utenti
 			JFrame frameAggiungiUser = new FrameAggiungiUtente(this.ag,
-					panelList, modelUtenti);
+					panelList, model);
 
 			frameAggiungiUser.setVisible(true);
 		}
 		if (e.getSource() == btnRimuovi) {
-			modelUtenti.removeItem(
-					(int) modelUtenti.getValueAt(table.getSelectedRow(), 0),
-					table.getSelectedRow());
+			if (table.getSelectedRow() != -1) {
+				model.removeItem(
+						(int) model.getValueAt(table.getSelectedRow(), 0),
+						table.getSelectedRow());
+
+			}
 
 		}
 
