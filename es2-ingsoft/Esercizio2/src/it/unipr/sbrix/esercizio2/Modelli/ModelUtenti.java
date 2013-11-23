@@ -71,12 +71,12 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 		Agenzia.saveToFile(fileIdUtenti, idGlobaleUtenti);
 		Agenzia.saveToFile(fileUtenti, listaUtenti);
 		addRow(utente);
-		this.fireUpdateEvent(new ModelUtentiEvent(this));
+		this.fireUpdateEvent(new ModelEvent(this));
 
 	}
 
-	public void addUpdateEventListener(ModelUtenteListener l) {
-		listenerList.add(ModelUtenteListener.class, l);
+	public void addUpdateEventListener(ModelListener l) {
+		listenerList.add(ModelListener.class, l);
 	}
 
 	// Notify all listeners that have registered interest for
@@ -95,16 +95,16 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 	}
 
-	protected void fireUpdateEvent(ModelUtentiEvent evt) {
+	protected void fireUpdateEvent(ModelEvent evt) {
 		// Guaranteed to return a non-null array
 		Object[] listeners = listenerList.getListenerList();
 		// Process the listeners last to first, notifying
 		// those that are interested in this event
 		for (int i = listeners.length - 2; i >= 0; i -= 2) {
-			if (listeners[i] == ModelUtenteListener.class) {
+			if (listeners[i] == ModelListener.class) {
 				// Lazily create the event:
 
-				((ModelUtenteListener) listeners[i + 1]).updateEventOccurred(evt);
+				((ModelListener) listeners[i + 1]).updateEventOccurred(evt);
 			}
 		}
 	}
@@ -286,7 +286,7 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 				listaUtenti.remove(index);
 				Agenzia.saveToFile(fileUtenti, listaUtenti);
 				removeRowRange(row, row);
-				this.fireUpdateEvent(new ModelUtentiEvent(this));
+				this.fireUpdateEvent(new ModelEvent(this));
 				break;
 
 			}
@@ -296,7 +296,7 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 	}
 
-	public void removeUpdateEventListener(ModelUtenteListener l) {
-		listenerList.remove(ModelUtenteListener.class, l);
+	public void removeUpdateEventListener(ModelListener l) {
+		listenerList.remove(ModelListener.class, l);
 	}
 }

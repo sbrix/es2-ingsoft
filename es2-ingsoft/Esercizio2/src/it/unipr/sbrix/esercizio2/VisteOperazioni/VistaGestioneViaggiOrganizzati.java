@@ -2,6 +2,7 @@ package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Modelli.ModelViaggiOrganizzati;
+import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiViaggioOrganizzato;
 
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -15,6 +16,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VistaGestioneViaggiOrganizzati extends JPanel {
 
@@ -30,13 +34,14 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 	private final JLabel lblGestioneViaggiOrganizzati = new JLabel(
 			"Gestione viaggi organizzati");
 	private final ModelViaggiOrganizzati model = new ModelViaggiOrganizzati();
-	private final JTable table = new JTable(model);
+	private JTable table = null;
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
 	 * Create the panel.
 	 */
-	public VistaGestioneViaggiOrganizzati(int uType, int id, Agenzia ag) {
+	public VistaGestioneViaggiOrganizzati(int uType, int id, final Agenzia ag) {
+		table = new JTable(ag.modelViaggi);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -63,6 +68,12 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 		add(panelButtons, gbc_panelButtons);
 
 		panelButtons.setLayout(new GridLayout(10, 1, 0, 0));
+		btnAggiungi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				FrameAggiungiViaggioOrganizzato frame = new FrameAggiungiViaggioOrganizzato(ag);
+				frame.setVisible(true);
+			}
+		});
 
 		panelButtons.add(btnAggiungi);
 

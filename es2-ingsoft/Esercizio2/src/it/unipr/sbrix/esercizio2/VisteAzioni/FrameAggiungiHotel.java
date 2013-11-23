@@ -2,10 +2,7 @@ package it.unipr.sbrix.esercizio2.VisteAzioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Hotel;
-import it.unipr.sbrix.esercizio2.Volo;
 import it.unipr.sbrix.esercizio2.Modelli.ModelHotel;
-import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;

@@ -3,22 +3,33 @@ package it.unipr.sbrix.esercizio2;
 import java.io.Serializable;
 
 public class ViaggioOrganizzato implements Serializable {
+	public ViaggioOrganizzato() {
+		super();
+		
+		this.andata = new Volo();
+		this.ritorno = new Volo();
+		this.hotel = new Hotel();
+		
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3650137362366764777L;
 
-	private int id;
+	protected int id=0;
 
-	Volo andata, ritorno;
-
-	Hotel hotel;
-
-	int durataPernottamento;
-
-	public ViaggioOrganizzato(Agenzia ag) {
-		id = ag.idGlobaleViaggiOrganizzati++;
+	public void setId(int id) {
+		this.id = id;
 	}
+
+	public Volo andata, ritorno;
+
+	public Hotel hotel;
+
+	public int durataPernottamento=0;
+
+	
 
 	public int getId() {
 		return id;

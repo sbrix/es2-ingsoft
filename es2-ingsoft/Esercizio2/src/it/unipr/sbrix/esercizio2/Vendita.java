@@ -4,20 +4,24 @@ import java.io.Serializable;
 
 public class Vendita extends ViaggioOrganizzato implements Serializable {
 
+	public Vendita() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 2808661019581646478L;
 
-	int id;
+	
 
-	Utente cliente;
-	int idOperatore;
+	private Utente cliente = new Utente();
+	private int idOperatore = 0;
 
-	public Vendita(Agenzia ag) {
-		super(ag);
-		// TODO Auto-generated constructor stub
-	}
+	
 
 	@Override
 	public String toString() {
