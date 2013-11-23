@@ -1,7 +1,9 @@
 package it.unipr.sbrix.esercizio2.VisteAzioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Hotel;
 import it.unipr.sbrix.esercizio2.ViaggioOrganizzato;
+import it.unipr.sbrix.esercizio2.Volo;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -36,6 +38,9 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements ActionLis
 	private JLabel lblRitornotostring = new JLabel("");
 	private JButton btnSelezionaRitorno = new JButton("Seleziona");
 	private JButton btnSelezionaHotel = new JButton("Seleziona");
+	private Volo[] voloHackAndata= new Volo[1];
+	private Volo[] voloHackRitorno=new Volo[1];
+	private Hotel[] hotelHack= new Hotel[1];
 
 	
 	
@@ -44,6 +49,9 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements ActionLis
 	 * Create the frame.
 	 */
 	public FrameAggiungiViaggioOrganizzato( Agenzia ag_) {
+		voloHackAndata[0]=new Volo();
+		voloHackRitorno[0]= new Volo();
+		hotelHack[0]=new Hotel();
 		ag=ag_;
 		setResizable(false);
 		setTitle("Aggiungi viaggio organizzato");
@@ -144,6 +152,9 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements ActionLis
 		JButton btnAggiungi = new JButton("Aggiungi");
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				viaggio.andata=voloHackAndata[0];
+				viaggio.ritorno=voloHackRitorno[0];
+				viaggio.hotel=hotelHack[0];
 				viaggio.durataPernottamento=Integer.valueOf(textFieldPernottamento.getText());
 				ag.modelViaggi.addItem(viaggio);
 				System.out.println(viaggio.toString());
@@ -164,15 +175,15 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements ActionLis
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		if (e.getSource()== this.btnSelezionaAndata){
-			FrameSelezioneVolo frame = new FrameSelezioneVolo(ag, viaggio.andata, lblAndatatostring);
+			FrameSelezioneVolo frame = new FrameSelezioneVolo(ag, voloHackAndata, lblAndatatostring);
 			frame.setVisible(true);
 		}
 		if (e.getSource()== this.btnSelezionaRitorno){
-			FrameSelezioneVolo frame = new FrameSelezioneVolo(ag, viaggio.ritorno, lblRitornotostring);
+			FrameSelezioneVolo frame = new FrameSelezioneVolo(ag, voloHackRitorno, lblRitornotostring);
 			frame.setVisible(true);
 		}
 		if(e.getSource()==btnSelezionaHotel){
-			FrameSelezioneHotel frame= new FrameSelezioneHotel(ag, viaggio.hotel, lblHoteltostring);
+			FrameSelezioneHotel frame= new FrameSelezioneHotel(ag, hotelHack, lblHoteltostring);
 			frame.setVisible(true);
 		}
 		

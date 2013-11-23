@@ -34,19 +34,17 @@ public class FrameSelezioneHotel extends JFrame {
 	private JTable table;
 	private JButton btnSeleziona = null;
 	private Agenzia ag = null;;
-	private Hotel hotel = null;
-	private JLabel label = null;
+	
 
 	
 
 	/**
 	 * Create the frame.
 	 */
-	public FrameSelezioneHotel( Agenzia ag_,  final Hotel hotel_, final JLabel label_) {
+	public FrameSelezioneHotel( Agenzia ag_,  final Hotel[] hotel, final JLabel label_) {
 		setResizable(false);
 		ag=ag_;
-		hotel=hotel_;
-		label=label_;
+		
 		setTitle("Seleziona hotel");
 		setBounds(100, 100, 514, 467);
 		contentPane = new JPanel();
@@ -75,14 +73,14 @@ public class FrameSelezioneHotel extends JFrame {
 		btnSeleziona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(table.getSelectedRow()!=-1){
-					Hotel tmp = (Hotel) ag.modelHotel.getItem((int) ag.modelHotel.getValueAt(table.getSelectedRow(), 0));
-					hotel_.citta=tmp.citta;
-					hotel_.nazione=tmp.nazione;
-					hotel_.nome=tmp.nome;
-					hotel_.via=tmp.via;
-					hotel_.setId(tmp.getId());
+					hotel[0] = (Hotel) ag.modelHotel.getItem((int) ag.modelHotel.getValueAt(table.getSelectedRow(), 0));
+					//hotel.citta=tmp.citta;
+					//hotel.nazione=tmp.nazione;
+					//hotel.nome=tmp.nome;
+					//hotel.via=tmp.via;
+					//hotel.setId(tmp.getId());
 					
-					label_.setText(hotel_.toString());
+					label_.setText(hotel[0].toString());
 					setVisible(false);
 				}
 			}

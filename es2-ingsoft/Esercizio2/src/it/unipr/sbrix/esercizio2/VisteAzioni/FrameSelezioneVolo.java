@@ -32,18 +32,13 @@ public class FrameSelezioneVolo extends JFrame {
 	private JTable table;
 	private JButton btnSeleziona = null;
 	private Agenzia ag = null;;
-	private Volo volo = null;
-	private JLabel label = null;
-
 	/**
 	 * Create the frame.
 	 */
-	public FrameSelezioneVolo(final Agenzia ag_, final Volo volo_,
+	public FrameSelezioneVolo(final Agenzia ag_, final Volo[] volo_,
 			final JLabel label_) {
 		setResizable(false);
 		ag = ag_;
-		volo = volo_;
-		label = label_;
 		setTitle("Seleziona volo");
 		setBounds(100, 100, 514, 467);
 		contentPane = new JPanel();
@@ -73,12 +68,12 @@ public class FrameSelezioneVolo extends JFrame {
 		btnSeleziona.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if (table.getSelectedRow() != -1) {
-					Volo tmp = (Volo) ag.modelVoli.getItem((int)ag.modelVoli.getValueAt(table.getSelectedRow(), 0));
-					System.out.println(tmp.toString());
-					volo_.partenza = tmp.partenza;
-					volo_.destinazione = tmp.destinazione;
-					volo_.setId(tmp.getId());
-					label_.setText(volo_.toString());
+					volo_[0] = (Volo) ag.modelVoli.getItem((int)ag.modelVoli.getValueAt(table.getSelectedRow(), 0));
+					System.out.println(volo_[0].toString());
+					//volo_.partenza = tmp.partenza;
+					//volo_.destinazione = tmp.destinazione;
+					//volo_.setId(tmp.getId());
+					label_.setText(volo_[0].toString());
 					setVisible(false);
 				}
 			}
@@ -90,5 +85,7 @@ public class FrameSelezioneVolo extends JFrame {
 		gbc_btnSeleziona.gridy = 0;
 		contentPane.add(btnSeleziona, gbc_btnSeleziona);
 	}
+	
+	
 
 }
