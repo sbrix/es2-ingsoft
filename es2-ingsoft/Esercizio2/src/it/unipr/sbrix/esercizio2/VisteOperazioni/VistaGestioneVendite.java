@@ -1,6 +1,10 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Utente;
+import it.unipr.sbrix.esercizio2.Modelli.FilterVenditeByUserId;
+import it.unipr.sbrix.esercizio2.Modelli.ModelVendite;
+
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableRowSorter;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -42,6 +47,15 @@ public class VistaGestioneVendite extends JPanel {
 	public VistaGestioneVendite(int uType, int id, final Agenzia ag) {
 
 		table = new JTable(ag.modelVendite);
+		if (uType == Utente.CLIENTE) {
+			TableRowSorter<ModelVendite> sorter = new TableRowSorter<ModelVendite>(
+					ag.modelVendite);
+			FilterVenditeByUserId filter = new FilterVenditeByUserId();
+			filter.setUserId(id);
+			sorter.setRowFilter(filter);
+			table.setRowSorter(sorter);
+
+		}
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };

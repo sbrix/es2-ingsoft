@@ -50,8 +50,6 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 	private int getNewId() {
 		return idGlobalePrenotazioni++;
 	}
-	
-	
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
