@@ -4,6 +4,8 @@ import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Prenotazione;
 import it.unipr.sbrix.esercizio2.Utente;
 import it.unipr.sbrix.esercizio2.Vendita;
+import it.unipr.sbrix.esercizio2.Modelli.ModelPrenotazioni;
+import it.unipr.sbrix.esercizio2.Modelli.FilterPrenotazioniByUserId;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiPrenotazione;
 
 import javax.swing.JPanel;
@@ -18,11 +20,11 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-
 import java.awt.GridLayout;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.table.TableRowSorter;
 
 public class VistaGestionePrenotazioni extends JPanel {
 
@@ -45,7 +47,21 @@ public class VistaGestionePrenotazioni extends JPanel {
 	 * Create the panel.
 	 */
 	public VistaGestionePrenotazioni(int uType, final int id, final Agenzia ag) {
-		table = new JTable(ag.modelPrenotazioni);
+		if (uType == Utente.ADMIN || uType == Utente.OPERATORE) {
+			table = new JTable(ag.modelPrenotazioni);
+		}
+		if (uType == Utente.CLIENTE) {
+			// filtrare per id cliente
+			System.out.println("avviato come utente ->id:" + id);
+			table = new JTable(ag.modelPrenotazioni);
+			TableRowSorter<ModelPrenotazioni> sorter = new TableRowSorter<ModelPrenotazioni>();
+			sorter.setModel(ag.modelPrenotazioni);
+			FilterPrenotazioniByUserId IDfilter = new FilterPrenotazioniByUserId();
+			IDfilter.setUserId(id);
+			sorter.setRowFilter(IDfilter);
+			table.setRowSorter(sorter);
+
+		}
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };

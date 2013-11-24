@@ -159,12 +159,14 @@ public class LoginWindow {
 		int id = 0;
 
 		id = agenzia.modelUtenti.checkUserLogin(name, pwd);
+		System.out.println("check utente ->id:"+id);
 		if (id != -1) {
 			Utente utente = (Utente) agenzia.modelUtenti.getItem(id);
 
 			switch (utente.getUserType()) {
 			case Utente.CLIENTE: {
 				userFound = true;
+				System.out.println("avvio come utente ->id:"+id);
 				VistaCliente frameCliente = new VistaCliente(
 						utente.getUserType(), utente.getId(), agenzia);
 
