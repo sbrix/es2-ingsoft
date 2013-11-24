@@ -37,12 +37,14 @@ public class VistaCliente extends JFrame {
 	protected JLabel lblShowmode = new JLabel("showMode");
 	protected JLabel lblShowutente = new JLabel("showUtente");
 	protected JPanel panelOperazioni = new JPanel();
+	private final JButton btnVisualizzaAcquisti = new JButton(
+			"Visualizza Acquisti");
 
 	/**
 	 * Create the frame.
 	 */
 	public VistaCliente(int uType, int id, Agenzia ag) {
-		//setResizable(false);
+		// setResizable(false);
 
 		setMinimumSize(new Dimension(1024, 600));
 		userType = uType;
@@ -123,6 +125,8 @@ public class VistaCliente extends JFrame {
 		});
 		panelOperazioni.setLayout(new GridLayout(10, 1, 0, 0));
 		panelOperazioni.add(btnGestionePrenotazioni);
+
+		panelOperazioni.add(btnVisualizzaAcquisti);
 
 		GridBagConstraints gbc_panelVista = new GridBagConstraints();
 		gbc_panelVista.fill = GridBagConstraints.BOTH;

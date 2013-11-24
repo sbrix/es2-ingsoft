@@ -16,7 +16,8 @@ public class Utente implements Serializable, Comparable<Utente> {
 	public String password = null;
 	private int userType;
 
-	Utente() {
+	public Utente() {
+		super();
 	}
 
 	public Utente(String nm, String cg, String un, String pw) {
@@ -70,9 +71,12 @@ public class Utente implements Serializable, Comparable<Utente> {
 	@Override
 	public int compareTo(Utente o) {
 		// TODO Auto-generated method stub
-		if (this.getId() > o.getId()) return 1;
-		if (this.getId() < o.getId()) return -1;
-		if (this.getId() == o.getId()) return 0;
+		if (this.getId() > o.getId())
+			return 1;
+		if (this.getId() < o.getId())
+			return -1;
+		if (this.getId() == o.getId())
+			return 0;
 		return 0;
 	}
 }

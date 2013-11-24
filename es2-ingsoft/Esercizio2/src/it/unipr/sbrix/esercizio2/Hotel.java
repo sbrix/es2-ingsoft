@@ -15,9 +15,11 @@ public class Hotel implements Serializable {
 
 	public String citta;
 	public String nazione;
+
 	public int getId() {
 		return id;
 	}
+
 	public void setId(int id) {
 		this.id = id;
 	}

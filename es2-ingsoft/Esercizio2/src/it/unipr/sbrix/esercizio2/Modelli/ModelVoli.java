@@ -159,7 +159,7 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 		// TODO Auto-generated method stub
 		if (this.getRowCount() > 0) {
 
-			this.removeRowRange(0,this.getRowCount() - 1);
+			this.removeRowRange(0, this.getRowCount() - 1);
 
 		}
 		for (Volo i : listaVoli) {

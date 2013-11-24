@@ -8,20 +8,14 @@ public class Prenotazione extends ViaggioOrganizzato implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-
-
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -1530929609848261724L;
 
-	
-
-	private Utente cliente = new Utente();
-	private int idOperatore = 0;
+	public Utente cliente = new Utente();
+	public int idOperatore = 0;
 	public long scadenza = 0;
-
-	
 
 	@Override
 	public String toString() {

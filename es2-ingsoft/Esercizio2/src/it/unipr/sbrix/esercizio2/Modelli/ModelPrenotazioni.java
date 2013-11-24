@@ -10,11 +10,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 
+import javax.swing.event.EventListenerList;
+
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Prenotazione;
 
 @SuppressWarnings("unchecked")
-public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements EditModel,InitModel {
+public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
+		EditModel, InitModel {
 	/**
 	 * 
 	 */
@@ -26,28 +29,63 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements Ed
 	private ArrayList<Prenotazione> listaPrenotazioni = new ArrayList<Prenotazione>(
 			0);
 	private int idGlobalePrenotazioni = 0;
-	private final File filePrenotazioni = new File(Agenzia.pathRoot + "prenotazioni.dat");
+	private final File filePrenotazioni = new File(Agenzia.pathRoot
+			+ "prenotazioni.dat");
 	private final File fileIdPrenotazioni = new File(Agenzia.pathRoot
 			+ "idPrenotazioni.dat");
 	private FileInputStream prenotazioniIn = null;
 	private FileInputStream idPrenotazioniIn = null;
 	private ObjectInputStream objInputStream = null;
+	protected static EventListenerList listenerList = new EventListenerList();
+	public final static long TRENTA_GIORNI_IN_MILLIS = 2592000000L;
 
 	public ModelPrenotazioni() {
 		super(Arrays.asList(COLUMN_NAMES));
+		setRowClass(Prenotazione.class);
+		initFromFile();
+		initModel();
 		// TODO Auto-generated constructor stub
 	}
-	
-	private int getNewId(){
+
+	private int getNewId() {
 		return idGlobalePrenotazioni++;
 	}
 
 	@Override
-	public Object getValueAt(int arg0, int arg1) {
-		// TODO Auto-generated method stub
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Prenotazione prenotazione = getRow(rowIndex);
+		switch (columnIndex) {
+		case 0:
+			return prenotazione.getId();
+		case 1:
+			return prenotazione.andata.partenza;
+		case 2:
+			return prenotazione.andata.destinazione;
+		case 3:
+			return prenotazione.durataPernottamento;
+		case 4:
+			return prenotazione.hotel.nome;
+		case 5:
+			return prenotazione.hotel.via;
+		case 6:
+			return prenotazione.hotel.citta;
+		case 7:
+			return prenotazione.hotel.nazione;
+		case 8:
+			return prenotazione.ritorno.partenza;
+		case 9:
+			return prenotazione.ritorno.destinazione;
+		case 10:
+			return prenotazione.idOperatore;
+		case 11:
+			return prenotazione.cliente.toString();
+		case 12:
+			return prenotazione.scadenza;
+
+		}
 		return null;
 	}
-	
+
 	private void controllaScadenzaPrenotazioni() {
 
 		// Controllo scadenza prenotazioni
@@ -86,7 +124,7 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements Ed
 				e.printStackTrace();
 			}
 		}
-		
+
 		if (!fileIdPrenotazioni.exists()) {
 			idGlobalePrenotazioni = 0;
 			try {
@@ -109,7 +147,7 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements Ed
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
 			objInputStream = new ObjectInputStream(prenotazioniIn);
 			listaPrenotazioni = (ArrayList<Prenotazione>) objInputStream
@@ -124,7 +162,7 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements Ed
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		try {
 			objInputStream = new ObjectInputStream(idPrenotazioniIn);
 			idGlobalePrenotazioni = (int) objInputStream.readObject();
@@ -140,31 +178,82 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements Ed
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		controllaScadenzaPrenotazioni();
+
 	}
 
 	@Override
 	public void initModel() {
 		// TODO Auto-generated method stub
-		
+		if (this.getRowCount() > 0) {
+
+			this.removeRowRange(0, this.getRowCount() - 1);
+
+		}
+		for (Prenotazione i : listaPrenotazioni) {
+			addRow(i);
+		}
+
 	}
 
+	@SuppressWarnings("static-access")
 	@Override
 	public void addItem(Object item) {
 		// TODO Auto-generated method stub
-		
+		Prenotazione prenotazione = (Prenotazione) item;
+		prenotazione.setId(getNewId());
+		prenotazione.scadenza = Calendar.getInstance().getTimeInMillis()
+				+ this.TRENTA_GIORNI_IN_MILLIS;
+		listaPrenotazioni.add(prenotazione);
+		Agenzia.saveToFile(filePrenotazioni, listaPrenotazioni);
+		Agenzia.saveToFile(fileIdPrenotazioni, this.idGlobalePrenotazioni);
+		fireUpdateEvent(new ModelEvent(this));
+
 	}
 
 	@Override
 	public Object getItem(int id) {
 		// TODO Auto-generated method stub
+		for (Prenotazione i : listaPrenotazioni) {
+			if (i.getId() == id)
+				return i;
+		}
 		return null;
 	}
 
 	@Override
 	public void removeItem(int id, int row) {
 		// TODO Auto-generated method stub
-		
+		int index = 0;
+		for (Prenotazione i : listaPrenotazioni) {
+			if (i.getId() == id) {
+				listaPrenotazioni.remove(index);
+				Agenzia.saveToFile(filePrenotazioni, listaPrenotazioni);
+				removeRowRange(row, row);
+				fireUpdateEvent(new ModelEvent(this));
+				break;
+			}
+			index++;
+		}
+
+	}
+
+	public void addUpdateEventListener(ModelListener listener) {
+		listenerList.add(ModelListener.class, listener);
+	}
+
+	public void removeMyEventListener(ModelListener listener) {
+		listenerList.remove(ModelListener.class, listener);
+	}
+
+	private void fireUpdateEvent(ModelEvent evt) {
+		Object[] listeners = listenerList.getListenerList();
+		System.out.println("update prenotazioni");
+		for (int i = 0; i < listeners.length; i = i + 2) {
+			if (listeners[i] == ModelListener.class) {
+				((ModelListener) listeners[i + 1]).updateEventOccurred(evt);
+			}
+		}
 	}
 
 }

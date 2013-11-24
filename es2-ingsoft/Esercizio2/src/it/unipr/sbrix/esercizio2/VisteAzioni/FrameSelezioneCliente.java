@@ -1,7 +1,7 @@
 package it.unipr.sbrix.esercizio2.VisteAzioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
-import it.unipr.sbrix.esercizio2.Hotel;
+import it.unipr.sbrix.esercizio2.Utente;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,7 +22,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
-public class FrameSelezioneHotel extends JFrame {
+public class FrameSelezioneCliente extends JFrame {
 
 	/**
 	 * 
@@ -36,12 +36,11 @@ public class FrameSelezioneHotel extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrameSelezioneHotel(Agenzia ag_, final Hotel[] hotel,
+	public FrameSelezioneCliente(final Agenzia ag_, final Utente[] cliente,
 			final JLabel label_) {
 		setResizable(false);
 		ag = ag_;
-
-		setTitle("Seleziona hotel");
+		setTitle("Seleziona cliente");
 		setBounds(100, 100, 514, 467);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -62,24 +61,22 @@ public class FrameSelezioneHotel extends JFrame {
 		gbc_scrollPane.gridy = 0;
 		contentPane.add(scrollPane, gbc_scrollPane);
 
-		table = new JTable(ag.modelHotel);
+		table = new JTable(ag.modelClienti);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		scrollPane.setViewportView(table);
 
 		btnSeleziona = new JButton("Seleziona");
 		btnSeleziona.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent arg0) {
 				if (table.getSelectedRow() != -1) {
-					hotel[0] = (Hotel) ag.modelHotel
-							.getItem((int) ag.modelHotel.getValueAt(
+					cliente[0] = (Utente) ag.modelClienti
+							.getItem((int) ag.modelClienti.getValueAt(
 									table.getSelectedRow(), 0));
-					// hotel.citta=tmp.citta;
-					// hotel.nazione=tmp.nazione;
-					// hotel.nome=tmp.nome;
-					// hotel.via=tmp.via;
-					// hotel.setId(tmp.getId());
-
-					label_.setText(hotel[0].toString());
+					System.out.println(cliente[0].toString());
+					// volo_.partenza = tmp.partenza;
+					// volo_.destinazione = tmp.destinazione;
+					// volo_.setId(tmp.getId());
+					label_.setText(cliente[0].toString());
 					setVisible(false);
 				}
 			}
@@ -92,6 +89,4 @@ public class FrameSelezioneHotel extends JFrame {
 		contentPane.add(btnSeleziona, gbc_btnSeleziona);
 	}
 
-	public void actionPerformed(ActionEvent e) {
-	}
 }

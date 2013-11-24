@@ -12,113 +12,120 @@ import java.util.Arrays;
 import javax.swing.event.EventListenerList;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
-import it.unipr.sbrix.esercizio2.ViaggioOrganizzato;
+import it.unipr.sbrix.esercizio2.Vendita;
 
 @SuppressWarnings("unchecked")
-public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
-		implements EditModel, InitModel {
+public class ModelVendite extends RowTableModel<Vendita> implements EditModel,
+		InitModel {
+
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -2251662406643181544L;
+	private static final long serialVersionUID = -3393649562267312023L;
 	private final static String[] COLUMN_NAMES = { "Id", "Partenza andata",
 			"Arrivo andata", "Durata Pernottamento", "Nome hotel", "Via Hotel",
 			"Città hotel", "Nazione hotel", "Partenza ritorno",
-			"Arrivo ritorno" };
-	private ArrayList<ViaggioOrganizzato> listaViaggiOrganizzati = new ArrayList<ViaggioOrganizzato>(
-			0);
-	private int idGlobaleViaggiOrganizzati = 0;
-	private final File fileViaggiOrganizzati = new File(Agenzia.pathRoot
-			+ "viaggi.dat");
-	private final File fileIdViaggiOrganizzati = new File(Agenzia.pathRoot
-			+ "idViaggiOrg.dat");
-	private FileInputStream viaggiIn = null;
-	private FileInputStream idViaggiOrgIn = null;
+			"Arrivo ritorno", "Nome operatore", "Nome cliente" };
+	private ArrayList<Vendita> listaVendite = new ArrayList<Vendita>(0);
+	private int idGlobaleVendite = 0;
+	private final File fileVendite = new File(Agenzia.pathRoot + "vendite.dat");
+	private final File fileIdVendite = new File(Agenzia.pathRoot
+			+ "idVendite.dat");
+	private FileInputStream venditeIn = null;
+	private FileInputStream idVenditeIn = null;
 	private ObjectInputStream objInputStream = null;
 	protected static EventListenerList listenerList = new EventListenerList();
 
-	public ModelViaggiOrganizzati() {
+	public ModelVendite() {
 		super(Arrays.asList(COLUMN_NAMES));
-		setRowClass(ViaggioOrganizzato.class);
+		setRowClass(Vendita.class);
 		initFromFile();
 		initModel();
-		// TODO Auto-generated constructor stub
+
 	}
 
-	public int getNewId() {
-		return idGlobaleViaggiOrganizzati++;
+	private int getNewId() {
+		return this.idGlobaleVendite++;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		ViaggioOrganizzato viaggio = getRow(rowIndex);
+		// TODO Auto-generated method stub
+		Vendita vendita = getRow(rowIndex);
 		switch (columnIndex) {
 		case 0:
-			return viaggio.getId();
+			return vendita.getId();
 		case 1:
-			return viaggio.andata.partenza;
+			return vendita.andata.partenza;
 		case 2:
-			return viaggio.andata.destinazione;
+			return vendita.andata.destinazione;
 		case 3:
-			return viaggio.durataPernottamento;
+			return vendita.durataPernottamento;
 		case 4:
-			return viaggio.hotel.nome;
+			return vendita.hotel.nome;
 		case 5:
-			return viaggio.hotel.via;
+			return vendita.hotel.via;
 		case 6:
-			return viaggio.hotel.citta;
+			return vendita.hotel.citta;
 		case 7:
-			return viaggio.hotel.nazione;
+			return vendita.hotel.nazione;
 		case 8:
-			return viaggio.ritorno.partenza;
+			return vendita.ritorno.partenza;
 		case 9:
-			return viaggio.ritorno.destinazione;
+			return vendita.ritorno.destinazione;
+		case 10:
+			return vendita.idOperatore;
+		case 11:
+			return vendita.cliente.toString();
+
 		}
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void initFromFile() {
 		// TODO Auto-generated method stub
-		if (!fileViaggiOrganizzati.exists()) {
+		if (!fileVendite.exists()) {
 
 			try {
-				fileViaggiOrganizzati.createNewFile();
+				fileVendite.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		if (!fileIdViaggiOrganizzati.exists()) {
-			idGlobaleViaggiOrganizzati = 0;
+
+		if (!fileIdVendite.exists()) {
+			idGlobaleVendite = 0;
 			try {
-				fileIdViaggiOrganizzati.createNewFile();
+				fileIdVendite.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+
 		}
+
 		try {
-			viaggiIn = new FileInputStream(fileViaggiOrganizzati);
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
-			idViaggiOrgIn = new FileInputStream(fileIdViaggiOrganizzati);
+			venditeIn = new FileInputStream(fileVendite);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
 		try {
-			objInputStream = new ObjectInputStream(viaggiIn);
-			listaViaggiOrganizzati = (ArrayList<ViaggioOrganizzato>) objInputStream
-					.readObject();
+			idVenditeIn = new FileInputStream(fileIdVendite);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try {
+			objInputStream = new ObjectInputStream(venditeIn);
+			listaVendite = (ArrayList<Vendita>) objInputStream.readObject();
 			objInputStream.close();
 		} catch (EOFException e) {
-			System.out.println("file viaggi organizzati vuoto");
+			System.out.println("file vendite vuoto");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -128,12 +135,13 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 		}
 
 		try {
-			objInputStream = new ObjectInputStream(idViaggiOrgIn);
-			idGlobaleViaggiOrganizzati = (int) objInputStream.readObject();
+			objInputStream = new ObjectInputStream(idVenditeIn);
+			idGlobaleVendite = (int) objInputStream.readObject();
+
 			objInputStream.close();
 		} catch (EOFException e) {
-			idGlobaleViaggiOrganizzati = 0;
-			System.out.println("file id viaggi organizzati vuoto");
+			idGlobaleVendite = 0;
+			System.out.println("file id vendite vuoto");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -152,7 +160,7 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 			this.removeRowRange(0, this.getRowCount() - 1);
 
 		}
-		for (ViaggioOrganizzato i : listaViaggiOrganizzati) {
+		for (Vendita i : listaVendite) {
 			addRow(i);
 		}
 
@@ -161,13 +169,11 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 	@Override
 	public void addItem(Object item) {
 		// TODO Auto-generated method stub
-		ViaggioOrganizzato viaggio = (ViaggioOrganizzato) item;
-		viaggio.setId(getNewId());
-		listaViaggiOrganizzati.add(viaggio);
-		addRow(viaggio);
-		Agenzia.saveToFile(fileViaggiOrganizzati, listaViaggiOrganizzati);
-		Agenzia.saveToFile(fileIdViaggiOrganizzati,
-				this.idGlobaleViaggiOrganizzati);
+		Vendita vendita = (Vendita) item;
+		vendita.setId(getNewId());
+		listaVendite.add(vendita);
+		Agenzia.saveToFile(fileVendite, listaVendite);
+		Agenzia.saveToFile(fileIdVendite, this.idGlobaleVendite);
 		fireUpdateEvent(new ModelEvent(this));
 
 	}
@@ -175,7 +181,7 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 	@Override
 	public Object getItem(int id) {
 		// TODO Auto-generated method stub
-		for (ViaggioOrganizzato i : listaViaggiOrganizzati) {
+		for (Vendita i : listaVendite) {
 			if (i.getId() == id)
 				return i;
 		}
@@ -186,11 +192,10 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 	public void removeItem(int id, int row) {
 		// TODO Auto-generated method stub
 		int index = 0;
-		for (ViaggioOrganizzato i : listaViaggiOrganizzati) {
+		for (Vendita i : listaVendite) {
 			if (i.getId() == id) {
-				listaViaggiOrganizzati.remove(index);
-				Agenzia.saveToFile(fileViaggiOrganizzati,
-						listaViaggiOrganizzati);
+				listaVendite.remove(index);
+				Agenzia.saveToFile(fileVendite, listaVendite);
 				removeRowRange(row, row);
 				fireUpdateEvent(new ModelEvent(this));
 				break;
@@ -210,7 +215,7 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 
 	private void fireUpdateEvent(ModelEvent evt) {
 		Object[] listeners = listenerList.getListenerList();
-		System.out.println("update viaggi organizzati");
+		System.out.println("update vendite");
 		for (int i = 0; i < listeners.length; i = i + 2) {
 			if (listeners[i] == ModelListener.class) {
 				((ModelListener) listeners[i + 1]).updateEventOccurred(evt);

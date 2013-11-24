@@ -2,7 +2,8 @@ package it.unipr.sbrix.esercizio2.VisteAzioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Hotel;
-import it.unipr.sbrix.esercizio2.ViaggioOrganizzato;
+import it.unipr.sbrix.esercizio2.Prenotazione;
+import it.unipr.sbrix.esercizio2.Utente;
 import it.unipr.sbrix.esercizio2.Volo;
 
 import javax.swing.JFrame;
@@ -22,8 +23,7 @@ import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class FrameAggiungiViaggioOrganizzato extends JFrame implements
-		ActionListener {
+public class FrameAggiungiPrenotazione extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 	private static final long serialVersionUID = 1328351513168186989L;
 	private JPanel contentPane;
 	private JTextField textFieldPernottamento;
-	final private ViaggioOrganizzato viaggio = new ViaggioOrganizzato();
+	final private Prenotazione prenotazione = new Prenotazione();
 	private Agenzia ag = null;
 	private JLabel lblAndatatostring = new JLabel("");
 	private JButton btnSelezionaAndata = new JButton("Seleziona");
@@ -42,26 +42,30 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 	private Volo[] voloHackAndata = new Volo[1];
 	private Volo[] voloHackRitorno = new Volo[1];
 	private Hotel[] hotelHack = new Hotel[1];
+	private Utente[] clienteHack = new Utente[1];
+	private final JLabel lblCliente = new JLabel("Cliente:");
+	private final JLabel lblClientetostring = new JLabel("");
+	private final JButton btnSelezionaCliente = new JButton("Seleziona");
 
 	/**
 	 * Create the frame.
 	 */
-	public FrameAggiungiViaggioOrganizzato(Agenzia ag_) {
+	public FrameAggiungiPrenotazione(Agenzia ag_, final int operatoreId) {
 		voloHackAndata[0] = new Volo();
 		voloHackRitorno[0] = new Volo();
 		hotelHack[0] = new Hotel();
+		clienteHack[0] = new Utente();
 		ag = ag_;
 		setResizable(false);
-		setTitle("Aggiungi viaggio organizzato");
-		setBounds(100, 100, 611, 182);
+		setTitle("Aggiungi prenotazione");
+		setBounds(100, 100, 611, 204);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[] { 0, 0, 0, 0, 0 };
-		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 0.0,
-				Double.MIN_VALUE };
-		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0 };
+		gbl_contentPane.columnWeights = new double[] { 0.0, 1.0, 0.0 };
+		gbl_contentPane.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0,
+				0.0 };
 		contentPane.setLayout(gbl_contentPane);
 
 		JLabel lblVoloAndata = new JLabel("Volo andata:");
@@ -80,7 +84,7 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 
 		btnSelezionaAndata.addActionListener(this);
 		GridBagConstraints gbc_btnSelezionaAndata = new GridBagConstraints();
-		gbc_btnSelezionaAndata.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSelezionaAndata.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSelezionaAndata.gridx = 2;
 		gbc_btnSelezionaAndata.gridy = 0;
 		contentPane.add(btnSelezionaAndata, gbc_btnSelezionaAndata);
@@ -101,7 +105,7 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 
 		btnSelezionaHotel.addActionListener(this);
 		GridBagConstraints gbc_btnSelezionaHotel = new GridBagConstraints();
-		gbc_btnSelezionaHotel.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSelezionaHotel.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSelezionaHotel.gridx = 2;
 		gbc_btnSelezionaHotel.gridy = 1;
 		contentPane.add(btnSelezionaHotel, gbc_btnSelezionaHotel);
@@ -139,7 +143,7 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 
 		btnSelezionaRitorno.addActionListener(this);
 		GridBagConstraints gbc_btnSelezionaRitorno = new GridBagConstraints();
-		gbc_btnSelezionaRitorno.insets = new Insets(0, 0, 5, 0);
+		gbc_btnSelezionaRitorno.insets = new Insets(0, 0, 5, 5);
 		gbc_btnSelezionaRitorno.gridx = 2;
 		gbc_btnSelezionaRitorno.gridy = 3;
 		contentPane.add(btnSelezionaRitorno, gbc_btnSelezionaRitorno);
@@ -147,20 +151,41 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 		JButton btnAggiungi = new JButton("Aggiungi");
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				viaggio.andata = voloHackAndata[0];
-				viaggio.ritorno = voloHackRitorno[0];
-				viaggio.hotel = hotelHack[0];
-				viaggio.durataPernottamento = Integer
+				prenotazione.andata = voloHackAndata[0];
+				prenotazione.ritorno = voloHackRitorno[0];
+				prenotazione.hotel = hotelHack[0];
+				prenotazione.durataPernottamento = Integer
 						.valueOf(textFieldPernottamento.getText());
-				ag.modelViaggi.addItem(viaggio);
-				System.out.println(viaggio.toString());
+				prenotazione.cliente = clienteHack[0];
+				prenotazione.idOperatore = operatoreId;
+				ag.modelPrenotazioni.addItem(prenotazione);
+				System.out.println(prenotazione.toString());
 				setVisible(false);
 			}
 		});
+
+		GridBagConstraints gbc_lblCliente = new GridBagConstraints();
+		gbc_lblCliente.insets = new Insets(0, 0, 5, 5);
+		gbc_lblCliente.gridx = 0;
+		gbc_lblCliente.gridy = 4;
+		contentPane.add(lblCliente, gbc_lblCliente);
+
+		GridBagConstraints gbc_lblClientetostring = new GridBagConstraints();
+		gbc_lblClientetostring.insets = new Insets(0, 0, 5, 5);
+		gbc_lblClientetostring.gridx = 1;
+		gbc_lblClientetostring.gridy = 4;
+		contentPane.add(lblClientetostring, gbc_lblClientetostring);
+
+		GridBagConstraints gbc_btnSelezionaCliente = new GridBagConstraints();
+		gbc_btnSelezionaCliente.insets = new Insets(0, 0, 5, 5);
+		gbc_btnSelezionaCliente.gridx = 2;
+		gbc_btnSelezionaCliente.gridy = 4;
+		btnSelezionaCliente.addActionListener(this);
+		contentPane.add(btnSelezionaCliente, gbc_btnSelezionaCliente);
 		GridBagConstraints gbc_btnAggiungi = new GridBagConstraints();
 		gbc_btnAggiungi.insets = new Insets(0, 0, 0, 5);
 		gbc_btnAggiungi.gridx = 0;
-		gbc_btnAggiungi.gridy = 4;
+		gbc_btnAggiungi.gridy = 5;
 		contentPane.add(btnAggiungi, gbc_btnAggiungi);
 	}
 
@@ -180,6 +205,11 @@ public class FrameAggiungiViaggioOrganizzato extends JFrame implements
 		if (e.getSource() == btnSelezionaHotel) {
 			FrameSelezioneHotel frame = new FrameSelezioneHotel(ag, hotelHack,
 					lblHoteltostring);
+			frame.setVisible(true);
+		}
+		if (e.getSource() == btnSelezionaCliente) {
+			FrameSelezioneCliente frame = new FrameSelezioneCliente(ag,
+					clienteHack, lblClientetostring);
 			frame.setVisible(true);
 		}
 

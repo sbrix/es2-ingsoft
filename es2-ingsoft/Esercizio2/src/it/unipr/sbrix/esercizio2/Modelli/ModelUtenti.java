@@ -240,12 +240,12 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 			e.printStackTrace();
 		}
 		Collections.sort(this.listaUtenti);
-		int index =0;
-		for (Utente i:listaUtenti){
+		int index = 0;
+		for (Utente i : listaUtenti) {
 			i.setId(index);
 			index++;
 		}
-		this.idGlobaleUtenti=index;
+		this.idGlobaleUtenti = index;
 		Agenzia.saveToFile(fileUtenti, listaUtenti);
 		Agenzia.saveToFile(fileIdUtenti, this.idGlobaleUtenti);
 
@@ -255,7 +255,7 @@ public class ModelUtenti extends RowTableModel<Utente> implements InitModel,
 
 		if (this.getRowCount() > 0) {
 
-			this.removeRowRange(0,this.getRowCount() - 1);
+			this.removeRowRange(0, this.getRowCount() - 1);
 
 		}
 		if (type == ModelUtenti.INIT_UTENTE) {

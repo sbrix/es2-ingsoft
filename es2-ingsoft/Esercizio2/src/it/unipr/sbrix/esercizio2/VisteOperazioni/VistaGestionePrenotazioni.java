@@ -2,7 +2,7 @@ package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Utente;
-import it.unipr.sbrix.esercizio2.Modelli.ModelPrenotazioni;
+import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiPrenotazione;
 
 import javax.swing.JPanel;
 import javax.swing.JButton;
@@ -16,17 +16,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+
 import java.awt.GridLayout;
 import java.awt.Component;
 
 import javax.swing.JTable;
 
-//ArrayList<Integer> idPrenotazioni = new ArrayList<>(0);
-/*for (Prenotazione i : ag.listaPrenotazioni) {
- if (i.cliente.id == id) {
- list.add(new JLabel(i.toString()));
- idPrenotazioni.add(i.id);
- }*/
 public class VistaGestionePrenotazioni extends JPanel {
 
 	/**
@@ -40,14 +35,15 @@ public class VistaGestionePrenotazioni extends JPanel {
 	private JButton btnRimuovi = new JButton("Rimuovi");
 	private final JLabel lblGestionePrenotazioni = new JLabel(
 			"Gestione prenotazioni");
-	private final ModelPrenotazioni model = new ModelPrenotazioni();
-	private final JTable table = new JTable(model);
+
+	private JTable table = null;
 	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
 	 * Create the panel.
 	 */
-	public VistaGestionePrenotazioni(int uType, int id, Agenzia ag) {
+	public VistaGestionePrenotazioni(int uType, final int id, final Agenzia ag) {
+		table = new JTable(ag.modelPrenotazioni);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -84,6 +80,12 @@ public class VistaGestionePrenotazioni extends JPanel {
 		btnRimuovi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// rimuovi prenotazione
+				if (table.getSelectedRow() != -1) {
+					ag.modelPrenotazioni.removeItem(
+							(int) ag.modelPrenotazioni.getValueAt(
+									table.getSelectedRow(), 0),
+							table.getSelectedRow());
+				}
 			}
 		});
 
@@ -94,6 +96,9 @@ public class VistaGestionePrenotazioni extends JPanel {
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// aggiungi prenotazione
+				FrameAggiungiPrenotazione frame = new FrameAggiungiPrenotazione(
+						ag, id);
+				frame.setVisible(true);
 			}
 		});
 		if (uType == Utente.CLIENTE) {

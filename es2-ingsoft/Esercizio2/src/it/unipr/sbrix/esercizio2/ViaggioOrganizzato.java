@@ -5,11 +5,11 @@ import java.io.Serializable;
 public class ViaggioOrganizzato implements Serializable {
 	public ViaggioOrganizzato() {
 		super();
-		
+
 		this.andata = new Volo();
 		this.ritorno = new Volo();
 		this.hotel = new Hotel();
-		
+
 	}
 
 	/**
@@ -17,7 +17,7 @@ public class ViaggioOrganizzato implements Serializable {
 	 */
 	private static final long serialVersionUID = -3650137362366764777L;
 
-	protected int id=0;
+	protected int id = 0;
 
 	public void setId(int id) {
 		this.id = id;
@@ -27,9 +27,7 @@ public class ViaggioOrganizzato implements Serializable {
 
 	public Hotel hotel;
 
-	public int durataPernottamento=0;
-
-	
+	public int durataPernottamento = 0;
 
 	public int getId() {
 		return id;

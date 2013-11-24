@@ -1,7 +1,6 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
-import it.unipr.sbrix.esercizio2.Modelli.ModelViaggiOrganizzati;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiViaggioOrganizzato;
 
 import java.awt.Component;
@@ -33,7 +32,6 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 	private JButton btnRimuovi = new JButton("Rimuovi");
 	private final JLabel lblGestioneViaggiOrganizzati = new JLabel(
 			"Gestione viaggi organizzati");
-	private final ModelViaggiOrganizzati model = new ModelViaggiOrganizzati();
 	private JTable table = null;
 	private final JScrollPane scrollPane = new JScrollPane();
 
@@ -70,12 +68,23 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 		panelButtons.setLayout(new GridLayout(10, 1, 0, 0));
 		btnAggiungi.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				FrameAggiungiViaggioOrganizzato frame = new FrameAggiungiViaggioOrganizzato(ag);
+				FrameAggiungiViaggioOrganizzato frame = new FrameAggiungiViaggioOrganizzato(
+						ag);
 				frame.setVisible(true);
 			}
 		});
 
 		panelButtons.add(btnAggiungi);
+		btnRimuovi.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (table.getSelectedRow() != -1) {
+					ag.modelViaggi.removeItem(
+							(int) ag.modelViaggi.getValueAt(
+									table.getSelectedRow(), 0),
+							table.getSelectedRow());
+				}
+			}
+		});
 
 		panelButtons.add(btnRimuovi);
 
