@@ -3,6 +3,7 @@ package it.unipr.sbrix.esercizio2.VisteUtenti;
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Utente;
 import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestionePrenotazioni;
+import it.unipr.sbrix.esercizio2.VisteOperazioni.VistaGestioneVendite;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -125,6 +126,16 @@ public class VistaCliente extends JFrame {
 		});
 		panelOperazioni.setLayout(new GridLayout(10, 1, 0, 0));
 		panelOperazioni.add(btnGestionePrenotazioni);
+		btnVisualizzaAcquisti.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (agenzia != null)
+					gestioneVendite(userType, personalID, agenzia);
+				else {
+					JOptionPane.showMessageDialog(null, new JLabel("Errore"));
+					System.exit(ERROR);
+				}
+			}
+		});
 
 		panelOperazioni.add(btnVisualizzaAcquisti);
 
@@ -141,6 +152,15 @@ public class VistaCliente extends JFrame {
 	private void gestionePrenotazione(int uType, int id, Agenzia ag) {
 		panelVista.removeAll();
 		panelVista.add(new VistaGestionePrenotazioni(uType, id, ag));
+		this.invalidate();
+		this.validate();
+		this.repaint();
+
+	}
+
+	private void gestioneVendite(int uType, int id, Agenzia ag) {
+		panelVista.removeAll();
+		panelVista.add(new VistaGestioneVendite(uType, id, ag));
 		this.invalidate();
 		this.validate();
 		this.repaint();

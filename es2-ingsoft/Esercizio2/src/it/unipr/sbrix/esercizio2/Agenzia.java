@@ -12,10 +12,7 @@ import it.unipr.sbrix.esercizio2.Modelli.ModelListener;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.Scanner;
-
 import org.jasypt.util.password.*;
 
 /**
@@ -47,12 +44,7 @@ public class Agenzia {
 	public ModelViaggiOrganizzati modelViaggi = null;
 	public ModelPrenotazioni modelPrenotazioni = null;
 	public ModelVendite modelVendite = null;
-	// ArrayList<Operatore> listaOperatori = new ArrayList<Operatore>(0);
-	// gestione input/output su file
-	/*
-	 * private final String pathRoot = File.separator + "esercizio1" +
-	 * File.separator + "data" + File.separator;
-	 */
+
 	public final static String pathRoot = new String(Agenzia.class
 			.getProtectionDomain().getCodeSource().getLocation().getPath())
 			+ File.separator + "data" + File.separator;
@@ -60,13 +52,6 @@ public class Agenzia {
 	private final File rootDir = new File(pathRoot);
 
 	public static BasicPasswordEncryptor passwordEncryptor = new BasicPasswordEncryptor();
-
-	// final File fileOperatori = new File(pathRoot + "operatori.dat");
-
-	public ObjectInputStream objInputStream = null;
-
-	// console per lettura input utente
-	public Scanner consoleInput = new Scanner(System.in);
 
 	public Agenzia() throws ClassNotFoundException, IOException {
 		rootDir.mkdirs();// creo la dir se non esiste

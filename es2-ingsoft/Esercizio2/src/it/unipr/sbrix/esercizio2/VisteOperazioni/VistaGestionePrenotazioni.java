@@ -1,7 +1,9 @@
 package it.unipr.sbrix.esercizio2.VisteOperazioni;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
+import it.unipr.sbrix.esercizio2.Prenotazione;
 import it.unipr.sbrix.esercizio2.Utente;
+import it.unipr.sbrix.esercizio2.Vendita;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiPrenotazione;
 
 import javax.swing.JPanel;
@@ -31,7 +33,7 @@ public class VistaGestionePrenotazioni extends JPanel {
 	private JPanel panelLista = new JPanel();
 	private JButton btnAggiungi = new JButton("Aggiungi");
 	private JPanel panelButtons = new JPanel();
-	private JButton btnCompra = new JButton("Compra");
+	private JButton btnCompra = new JButton("Acquista");
 	private JButton btnRimuovi = new JButton("Rimuovi");
 	private final JLabel lblGestionePrenotazioni = new JLabel(
 			"Gestione prenotazioni");
@@ -72,6 +74,23 @@ public class VistaGestionePrenotazioni extends JPanel {
 		btnCompra.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// trasforma prenotazione in vendita
+				if (table.getSelectedRow() != -1) {
+					Vendita vendita = new Vendita();
+					Prenotazione prenotazione = (Prenotazione) ag.modelPrenotazioni
+							.getItem((int) ag.modelPrenotazioni.getValueAt(
+									table.getSelectedRow(), 0));
+					vendita.andata = prenotazione.andata;
+					vendita.cliente = prenotazione.cliente;
+					vendita.durataPernottamento = prenotazione.durataPernottamento;
+					vendita.hotel = prenotazione.hotel;
+					vendita.idOperatore = prenotazione.idOperatore;
+					vendita.ritorno = prenotazione.ritorno;
+					ag.modelVendite.addItem(vendita);
+					ag.modelPrenotazioni.removeItem(
+							(int) ag.modelPrenotazioni.getValueAt(
+									table.getSelectedRow(), 0),
+							table.getSelectedRow());
+				}
 			}
 		});
 		panelButtons.setLayout(new GridLayout(10, 1, 0, 0));

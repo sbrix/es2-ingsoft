@@ -31,7 +31,7 @@ public class FrameSelezioneHotel extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JButton btnSeleziona = null;
-	private Agenzia ag = null;;
+	private Agenzia ag = null;
 
 	/**
 	 * Create the frame.
