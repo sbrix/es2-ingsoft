@@ -170,8 +170,8 @@ public class LoginWindow {
 				VistaCliente frameCliente = new VistaCliente(
 						utente.getUserType(), utente.getId(), agenzia);
 
-				if(frameCliente  !=null) frameCliente.setVisible(true);
-				else System.out.println("frame cliente vuoto");
+				frameCliente.setVisible(true);
+				
 				frmLogin.setVisible(false);
 				break;
 			}
