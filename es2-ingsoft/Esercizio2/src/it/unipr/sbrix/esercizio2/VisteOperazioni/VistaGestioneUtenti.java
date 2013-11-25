@@ -6,6 +6,7 @@ import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiUtente;
 
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -22,8 +23,10 @@ import javax.swing.ScrollPaneConstants;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.TableCellRenderer;
 
 public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	/**
@@ -84,7 +87,19 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 
 		panelList.add(scrollPane);
 
-		table = new JTable(model);
+		table = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+
+				//  Alternate row color
+
+				if (!isRowSelected(row))
+					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+
+				return c;
+			}
+		};
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		// table.getColumnModel().getColumn(0).setPreferredWidth(50);

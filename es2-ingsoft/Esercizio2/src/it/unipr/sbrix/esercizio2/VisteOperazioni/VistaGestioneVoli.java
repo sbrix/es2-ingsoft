@@ -4,6 +4,7 @@ import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Modelli.ModelVoli;
 import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiVolo;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,6 +18,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -41,7 +44,19 @@ public class VistaGestioneVoli extends JPanel {
 	 */
 	public VistaGestioneVoli(int uType, int id, final Agenzia ag) {
 		model = ag.modelVoli;
-		table = new JTable(model);
+		table = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+
+				//  Alternate row color
+
+				if (!isRowSelected(row))
+					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+
+				return c;
+			}
+		};
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };

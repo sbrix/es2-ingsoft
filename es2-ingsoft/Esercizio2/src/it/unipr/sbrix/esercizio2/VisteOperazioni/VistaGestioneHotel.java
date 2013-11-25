@@ -6,6 +6,7 @@ import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiHotel;
 
 import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
@@ -19,6 +20,7 @@ import java.awt.Component;
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -48,7 +50,19 @@ public class VistaGestioneHotel extends JPanel {
 	 */
 	public VistaGestioneHotel(int uType, int id, final Agenzia ag) {
 		model = ag.modelHotel;
-		table = new JTable(model);
+		table = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+
+				//  Alternate row color
+
+				if (!isRowSelected(row))
+					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+
+				return c;
+			}
+		};
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };

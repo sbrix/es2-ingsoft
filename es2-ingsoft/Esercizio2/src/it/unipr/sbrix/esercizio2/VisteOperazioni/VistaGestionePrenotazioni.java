@@ -11,6 +11,7 @@ import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiPrenotazione;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 
+import java.awt.Color;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
@@ -20,11 +21,16 @@ import java.awt.event.ActionEvent;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+
 import java.awt.GridLayout;
 import java.awt.Component;
 
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
+
+import org.joda.time.DateTime;
+import org.joda.time.Days;
 
 public class VistaGestionePrenotazioni extends JPanel {
 
@@ -47,13 +53,32 @@ public class VistaGestionePrenotazioni extends JPanel {
 	 * Create the panel.
 	 */
 	public VistaGestionePrenotazioni(int uType, final int id, final Agenzia ag) {
-		if (uType == Utente.ADMIN || uType == Utente.OPERATORE) {
-			table = new JTable(ag.modelPrenotazioni);
-		}
+		table = new JTable(ag.modelPrenotazioni){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+
+				//  Alternate row color
+
+				
+				if (!isRowSelected(row)){
+					
+					
+					Prenotazione tmp = (Prenotazione) ag.modelPrenotazioni.getItem((int)ag.modelPrenotazioni.getValueAt(row, 0));
+					DateTime dataScadenza = new DateTime(tmp.scadenza);
+					//System.out.println("scadenza:"+dataScadenza.getMillis());
+					DateTime dataDiOggi = new DateTime();
+					//System.out.println("oggi:"+dataDiOggi.getMillis());
+					if( (dataScadenza.getMillis()-dataDiOggi.getMillis()) <= 259200000L) c.setBackground(Color.ORANGE);
+					else c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);}
+
+				return c;
+			}
+		};
 		if (uType == Utente.CLIENTE) {
 			// filtrare per id cliente
 			System.out.println("avviato come utente ->id:" + id);
-			table = new JTable(ag.modelPrenotazioni);
+			
 			TableRowSorter<ModelPrenotazioni> sorter = new TableRowSorter<ModelPrenotazioni>();
 			sorter.setModel(ag.modelPrenotazioni);
 			FilterPrenotazioniByUserId IDfilter = new FilterPrenotazioniByUserId();

@@ -5,6 +5,7 @@ import it.unipr.sbrix.esercizio2.Utente;
 import it.unipr.sbrix.esercizio2.Modelli.FilterVenditeByUserId;
 import it.unipr.sbrix.esercizio2.Modelli.ModelVendite;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -17,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import java.awt.event.ActionListener;
@@ -46,7 +48,19 @@ public class VistaGestioneVendite extends JPanel {
 	 */
 	public VistaGestioneVendite(int uType, int id, final Agenzia ag) {
 
-		table = new JTable(ag.modelVendite);
+		table = new JTable(ag.modelVendite){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
+
+				//  Alternate row color
+
+				if (!isRowSelected(row))
+					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+
+				return c;
+			}
+		};
 		if (uType == Utente.CLIENTE) {
 			TableRowSorter<ModelVendite> sorter = new TableRowSorter<ModelVendite>(
 					ag.modelVendite);
