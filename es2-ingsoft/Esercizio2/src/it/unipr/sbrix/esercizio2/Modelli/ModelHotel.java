@@ -171,11 +171,11 @@ public class ModelHotel extends RowTableModel<Hotel> implements InitModel,
 		}
 		Collections.sort(listaHotel);
 		int index = 0;
-		for(Hotel i:listaHotel){
+		for (Hotel i : listaHotel) {
 			i.setId(index);
 			index++;
 		}
-		this.idGlobaleHotel=index;
+		this.idGlobaleHotel = index;
 		Agenzia.saveToFile(fileHotel, listaHotel);
 		Agenzia.saveToFile(fileIdHotel, this.idGlobaleHotel);
 

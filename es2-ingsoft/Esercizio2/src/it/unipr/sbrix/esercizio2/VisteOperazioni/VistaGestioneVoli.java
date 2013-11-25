@@ -45,15 +45,16 @@ public class VistaGestioneVoli extends JPanel {
 	@SuppressWarnings("serial")
 	public VistaGestioneVoli(int uType, int id, final Agenzia ag) {
 		model = ag.modelVoli;
-		table = new JTable(model){
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
+		table = new JTable(model) {
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 
-				//  Alternate row color
+				// Alternate row color
 
 				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+					c.setBackground(row % 2 == 0 ? getBackground()
+							: Color.LIGHT_GRAY);
 
 				return c;
 			}
@@ -71,6 +72,7 @@ public class VistaGestioneVoli extends JPanel {
 		gbc_panelLista.gridy = 0;
 		add(panelLista, gbc_panelLista);
 		panelLista.setLayout(new BoxLayout(panelLista, BoxLayout.Y_AXIS));
+		
 		lblGestioneVoli.setAlignmentX(Component.CENTER_ALIGNMENT);
 
 		panelLista.add(lblGestioneVoli);

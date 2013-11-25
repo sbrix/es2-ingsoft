@@ -18,7 +18,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -39,6 +38,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	private JPanel panelButtons = new JPanel();
 	private JButton btnAggiungi = null;
 	private JButton btnRimuovi = null;
+	private final JLabel lblGestioneUtenti = new JLabel("Gestione Utenti");
 	private final JScrollPane scrollPane = new JScrollPane();
 	private Agenzia ag = null;
 
@@ -48,23 +48,25 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	@SuppressWarnings("serial")
 	public VistaGestioneUtenti(Agenzia agenzia) {
 
+		
 		ag = agenzia;
 
 		model = ag.modelUtenti;
-		table = new JTable(model){
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
+		table = new JTable(model) {
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 
-				//  Alternate row color
+				// Alternate row color
 
 				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+					c.setBackground(row % 2 == 0 ? getBackground()
+							: Color.LIGHT_GRAY);
 
 				return c;
 			}
 		};
-		
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -72,42 +74,35 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 
 		GridBagConstraints gbc_panelList = new GridBagConstraints();
-		gbc_panelList.anchor = GridBagConstraints.NORTH;
+		gbc_panelList.fill = GridBagConstraints.BOTH;
+		//gbc_panelList.anchor = GridBagConstraints.NORTH;
 		gbc_panelList.insets = new Insets(0, 0, 0, 5);
 		gbc_panelList.gridx = 0;
 		gbc_panelList.gridy = 0;
 		add(panelList, gbc_panelList);
 		panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
 
-		JLabel lblGestioneUtenti = new JLabel("Gestione Utenti");
+		// ------fin qui nessun problema nella visualizzazione
+
 		lblGestioneUtenti.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panelList.add(lblGestioneUtenti);
-		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
+		scrollPane.setViewportView(table);
+		scrollPane.setMinimumSize(new Dimension(780, 500));
 		panelList.add(scrollPane);
 
-		add(panelList);
-		panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
+		add(panelList,gbc_panelList);
 
 		lblGestioneUtenti.setAlignmentX(Component.CENTER_ALIGNMENT);
 		panelList.add(lblGestioneUtenti);
 
 		panelList.add(scrollPane);
 
-		
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		// table.getColumnModel().getColumn(0).setPreferredWidth(50);
 		// table.getColumnModel().getColumn(0).setResizable(false);
 
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
-		scrollPane.setViewportView(table);
-
-		scrollPane.setMinimumSize(new Dimension(780, 500));
 
 		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
 		gbc_panelButtons.anchor = GridBagConstraints.NORTH;
@@ -124,6 +119,10 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 		btnRimuovi = new JButton("Rimuovi");
 		btnRimuovi.addActionListener(this);
 		panelButtons.add(btnRimuovi);
+		
+		this.revalidate();
+		this.repaint();
+		this.setVisible(true);
 
 	}
 

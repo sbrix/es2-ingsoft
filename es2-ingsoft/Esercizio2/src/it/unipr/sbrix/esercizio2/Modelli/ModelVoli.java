@@ -154,11 +154,11 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 		}
 		Collections.sort(listaVoli);
 		int index = 0;
-		for(Volo i:listaVoli){
+		for (Volo i : listaVoli) {
 			i.setId(index);
 			index++;
 		}
-		this.idVoli=index;
+		this.idVoli = index;
 		Agenzia.saveToFile(fileVoli, listaVoli);
 		Agenzia.saveToFile(fileIdVoli, this.idVoli);
 

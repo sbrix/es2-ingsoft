@@ -26,5 +26,4 @@ public class Vendita extends ViaggioOrganizzato implements Serializable {
 				+ idOperatore + "]";
 	}
 
-	
 }

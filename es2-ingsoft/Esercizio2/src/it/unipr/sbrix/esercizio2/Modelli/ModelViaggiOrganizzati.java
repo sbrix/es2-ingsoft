@@ -143,14 +143,15 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 			e.printStackTrace();
 		}
 		Collections.sort(listaViaggiOrganizzati);
-		int index =0;
-		for(ViaggioOrganizzato i:listaViaggiOrganizzati){
+		int index = 0;
+		for (ViaggioOrganizzato i : listaViaggiOrganizzati) {
 			i.setId(index);
 			index++;
 		}
-		this.idGlobaleViaggiOrganizzati=index;
+		this.idGlobaleViaggiOrganizzati = index;
 		Agenzia.saveToFile(fileViaggiOrganizzati, listaViaggiOrganizzati);
-		Agenzia.saveToFile(fileIdViaggiOrganizzati, this.idGlobaleViaggiOrganizzati);
+		Agenzia.saveToFile(fileIdViaggiOrganizzati,
+				this.idGlobaleViaggiOrganizzati);
 
 	}
 

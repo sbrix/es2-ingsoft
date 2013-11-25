@@ -151,12 +151,12 @@ public class ModelVendite extends RowTableModel<Vendita> implements EditModel,
 			e.printStackTrace();
 		}
 		Collections.sort(listaVendite);
-		int index =0;
-		for(Vendita i:listaVendite){
+		int index = 0;
+		for (Vendita i : listaVendite) {
 			i.setId(index);
 			index++;
 		}
-		this.idGlobaleVendite=index;
+		this.idGlobaleVendite = index;
 		Agenzia.saveToFile(fileVendite, listaVendite);
 		Agenzia.saveToFile(fileIdVendite, this.idGlobaleVendite);
 

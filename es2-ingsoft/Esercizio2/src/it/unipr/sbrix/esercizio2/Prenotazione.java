@@ -27,6 +27,4 @@ public class Prenotazione extends ViaggioOrganizzato implements Serializable {
 				+ idOperatore + ", scadenza=" + scadenza + "]";
 	}
 
-	
-
 }

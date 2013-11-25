@@ -41,7 +41,7 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 	private ObjectInputStream objInputStream = null;
 	protected static EventListenerList listenerList = new EventListenerList();
 	public final static long TRENTA_GIORNI_IN_MILLIS = 2592000000L;
-	public final static long TRE_GIORNI_IN_MILLIS=259200000L;
+	public final static long TRE_GIORNI_IN_MILLIS = 259200000L;
 
 	public ModelPrenotazioni() {
 		super(Arrays.asList(COLUMN_NAMES));
@@ -82,13 +82,15 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 		case 10:
 			return prenotazione.idOperatore;
 		case 11:
-			return new String(prenotazione.cliente.nome+" "+prenotazione.cliente.cognome);
-		case 12:{
+			return new String(prenotazione.cliente.nome + " "
+					+ prenotazione.cliente.cognome);
+		case 12: {
 			DateTime dataScadenza = new DateTime(prenotazione.scadenza);
-			return new String(dataScadenza.getDayOfMonth()+"/"+dataScadenza.getMonthOfYear()+"/"+dataScadenza.getYear());
-			
+			return new String(dataScadenza.getDayOfMonth() + "/"
+					+ dataScadenza.getMonthOfYear() + "/"
+					+ dataScadenza.getYear());
+
 		}
-			
 
 		}
 		return null;
@@ -188,12 +190,12 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 		}
 		controllaScadenzaPrenotazioni();
 		Collections.sort(listaPrenotazioni);
-		int index =0;
-		for(Prenotazione i:listaPrenotazioni){
+		int index = 0;
+		for (Prenotazione i : listaPrenotazioni) {
 			i.setId(index);
 			index++;
 		}
-		this.idGlobalePrenotazioni=index;
+		this.idGlobalePrenotazioni = index;
 		Agenzia.saveToFile(filePrenotazioni, listaPrenotazioni);
 		Agenzia.saveToFile(fileIdPrenotazioni, this.idGlobalePrenotazioni);
 

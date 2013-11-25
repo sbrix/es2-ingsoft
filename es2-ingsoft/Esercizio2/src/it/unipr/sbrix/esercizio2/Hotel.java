@@ -2,7 +2,7 @@ package it.unipr.sbrix.esercizio2;
 
 import java.io.Serializable;
 
-public class Hotel implements Serializable,Comparable<Hotel> {
+public class Hotel implements Serializable, Comparable<Hotel> {
 	/**
 	 * 
 	 */
@@ -33,9 +33,12 @@ public class Hotel implements Serializable,Comparable<Hotel> {
 	@Override
 	public int compareTo(Hotel o) {
 		// TODO Auto-generated method stub
-		if(this.id>o.getId()) return 1;
-		if(this.id==o.getId()) return 0;
-		if(this.id<o.getId()) return -1;
+		if (this.id > o.getId())
+			return 1;
+		if (this.id == o.getId())
+			return 0;
+		if (this.id < o.getId())
+			return -1;
 		return 0;
 	}
 

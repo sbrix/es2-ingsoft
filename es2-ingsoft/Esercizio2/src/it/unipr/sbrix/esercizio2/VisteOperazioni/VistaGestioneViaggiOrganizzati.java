@@ -42,16 +42,16 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 	 */
 	@SuppressWarnings("serial")
 	public VistaGestioneViaggiOrganizzati(int uType, int id, final Agenzia ag) {
-		table = new JTable(ag.modelViaggi)
-		{
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
+		table = new JTable(ag.modelViaggi) {
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 
-				//  Alternate row color
+				// Alternate row color
 
 				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+					c.setBackground(row % 2 == 0 ? getBackground()
+							: Color.LIGHT_GRAY);
 
 				return c;
 			}

@@ -51,15 +51,16 @@ public class VistaGestioneHotel extends JPanel {
 	@SuppressWarnings("serial")
 	public VistaGestioneHotel(int uType, int id, final Agenzia ag) {
 		model = ag.modelHotel;
-		table = new JTable(model){
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
+		table = new JTable(model) {
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 
-				//  Alternate row color
+				// Alternate row color
 
 				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+					c.setBackground(row % 2 == 0 ? getBackground()
+							: Color.LIGHT_GRAY);
 
 				return c;
 			}

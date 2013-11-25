@@ -23,11 +23,12 @@ public class FilterPrenotazioniByUserId extends
 		// TODO Auto-generated method stub
 
 		ModelPrenotazioni model = entry.getModel();
-		if(model==null) System.out.println("modello prenotazione vuoto");
-		System.out.println("entry identifier:"+entry.getIdentifier());
+		if (model == null)
+			System.out.println("modello prenotazione vuoto");
+		System.out.println("entry identifier:" + entry.getIdentifier());
 		Prenotazione prenotazione = (Prenotazione) model.getItem(entry
 				.getIdentifier());
-		if (prenotazione !=null && prenotazione.cliente.getId() == this.userId)
+		if (prenotazione != null && prenotazione.cliente.getId() == this.userId)
 			return true;
 		// if(prenotazione.cliente.getId()==entry.getIdentifier()) return true;
 		System.out.println("oggetto prenotazione vuoto");

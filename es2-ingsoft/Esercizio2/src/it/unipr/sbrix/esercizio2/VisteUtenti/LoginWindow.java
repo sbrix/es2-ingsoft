@@ -171,7 +171,7 @@ public class LoginWindow {
 						utente.getUserType(), utente.getId(), agenzia);
 
 				frameCliente.setVisible(true);
-				
+
 				frmLogin.setVisible(false);
 				break;
 			}

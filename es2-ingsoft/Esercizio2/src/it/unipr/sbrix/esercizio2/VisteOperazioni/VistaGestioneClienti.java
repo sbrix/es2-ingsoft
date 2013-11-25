@@ -7,7 +7,6 @@ import it.unipr.sbrix.esercizio2.VisteAzioni.FrameAggiungiCliente;
 import javax.swing.JPanel;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -18,8 +17,6 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.ListSelectionModel;
-import javax.swing.ScrollPaneConstants;
-
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,14 +30,15 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 8129663312121425389L;
-	private JTable table;
 	private ModelUtenti model;
 	private JPanel panelList = new JPanel();
 	private JPanel panelButtons = new JPanel();
 	private JButton btnAggiungi = null;
 	private JButton btnRimuovi = null;
-	private final JScrollPane scrollPane = new JScrollPane();
 	private Agenzia ag = null;
+	private final JLabel label = new JLabel("Gestione Utenti");
+	private JTable table =null;
+	private final JScrollPane scrollPane = new JScrollPane();
 
 	/**
 	 * Create the panel.
@@ -50,15 +48,16 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 
 		ag = agenzia;
 		model = ag.modelClienti;
-		table = new JTable(model){
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
+		table = new JTable(model) {
+			public Component prepareRenderer(TableCellRenderer renderer,
+					int row, int column) {
 				Component c = super.prepareRenderer(renderer, row, column);
 
-				//  Alternate row color
+				// Alternate row color
 
 				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+					c.setBackground(row % 2 == 0 ? getBackground()
+							: Color.LIGHT_GRAY);
 
 				return c;
 			}
@@ -71,37 +70,23 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 		setLayout(gridBagLayout);
 
 		GridBagConstraints gbc_panelList = new GridBagConstraints();
-		gbc_panelList.anchor = GridBagConstraints.NORTH;
+		gbc_panelList.fill = GridBagConstraints.BOTH;
+		//gbc_panelList.anchor = GridBagConstraints.NORTH;
 		gbc_panelList.insets = new Insets(0, 0, 0, 5);
 		gbc_panelList.gridx = 0;
 		gbc_panelList.gridy = 0;
 		add(panelList, gbc_panelList);
 		panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
-
-		JLabel lblGestioneUtenti = new JLabel("Gestione Utenti");
-		lblGestioneUtenti.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panelList.add(lblGestioneUtenti);
-		scrollPane
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		scrollPane
-				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		panelList.add(scrollPane);
-
-		add(panelList);
-		panelList.setLayout(new BoxLayout(panelList, BoxLayout.Y_AXIS));
-
-		lblGestioneUtenti.setAlignmentX(Component.CENTER_ALIGNMENT);
-		panelList.add(lblGestioneUtenti);
-
-		panelList.add(scrollPane);
-
 		
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
+		add(panelList,gbc_panelList);
+		label.setAlignmentX(0.5f);
+		
+		panelList.add(label);
+		
+		panelList.add(scrollPane);
 		scrollPane.setViewportView(table);
-
-		scrollPane.setMinimumSize(new Dimension(780, 500));
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		GridBagConstraints gbc_panelButtons = new GridBagConstraints();
 		gbc_panelButtons.anchor = GridBagConstraints.NORTH;

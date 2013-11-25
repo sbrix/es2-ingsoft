@@ -2,7 +2,8 @@ package it.unipr.sbrix.esercizio2;
 
 import java.io.Serializable;
 
-public class ViaggioOrganizzato implements Serializable,Comparable<ViaggioOrganizzato> {
+public class ViaggioOrganizzato implements Serializable,
+		Comparable<ViaggioOrganizzato> {
 	public ViaggioOrganizzato() {
 		super();
 
@@ -43,9 +44,12 @@ public class ViaggioOrganizzato implements Serializable,Comparable<ViaggioOrgani
 	@Override
 	public int compareTo(ViaggioOrganizzato o) {
 		// TODO Auto-generated method stub
-		if(this.id>o.getId()) return 1;
-		if(this.id==o.getId()) return 0;
-		if(this.id<o.getId()) return -1;
+		if (this.id > o.getId())
+			return 1;
+		if (this.id == o.getId())
+			return 0;
+		if (this.id < o.getId())
+			return -1;
 		return 0;
 	}
 
