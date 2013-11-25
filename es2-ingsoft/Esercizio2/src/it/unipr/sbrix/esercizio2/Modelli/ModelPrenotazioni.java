@@ -41,6 +41,7 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 	private ObjectInputStream objInputStream = null;
 	protected static EventListenerList listenerList = new EventListenerList();
 	public final static long TRENTA_GIORNI_IN_MILLIS = 2592000000L;
+	public final static long TRE_GIORNI_IN_MILLIS=259200000L;
 
 	public ModelPrenotazioni() {
 		super(Arrays.asList(COLUMN_NAMES));

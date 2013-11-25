@@ -45,16 +45,26 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("serial")
 	public VistaGestioneUtenti(Agenzia agenzia) {
 
 		ag = agenzia;
 
 		model = ag.modelUtenti;
-		/*
-		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }
-		 */
+		table = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
 
-		// setLayout(new GridLayout(1, 2, 0, 0));
+				//  Alternate row color
+
+				if (!isRowSelected(row))
+					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+
+				return c;
+			}
+		};
+		
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
 		gridBagLayout.columnWeights = new double[] { 1.0, 0.0, Double.MIN_VALUE };
@@ -87,19 +97,7 @@ public class VistaGestioneUtenti extends JPanel implements ActionListener {
 
 		panelList.add(scrollPane);
 
-		table = new JTable(model){
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
-				Component c = super.prepareRenderer(renderer, row, column);
-
-				//  Alternate row color
-
-				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
-
-				return c;
-			}
-		};
+		
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		// table.getColumnModel().getColumn(0).setPreferredWidth(50);

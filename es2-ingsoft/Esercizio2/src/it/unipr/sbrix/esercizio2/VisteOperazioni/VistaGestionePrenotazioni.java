@@ -30,7 +30,6 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableRowSorter;
 
 import org.joda.time.DateTime;
-import org.joda.time.Days;
 
 public class VistaGestionePrenotazioni extends JPanel {
 
@@ -52,8 +51,11 @@ public class VistaGestionePrenotazioni extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("serial")
 	public VistaGestionePrenotazioni(int uType, final int id, final Agenzia ag) {
 		table = new JTable(ag.modelPrenotazioni){
+			
+
 			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
 			{
 				Component c = super.prepareRenderer(renderer, row, column);
@@ -69,7 +71,7 @@ public class VistaGestionePrenotazioni extends JPanel {
 					//System.out.println("scadenza:"+dataScadenza.getMillis());
 					DateTime dataDiOggi = new DateTime();
 					//System.out.println("oggi:"+dataDiOggi.getMillis());
-					if( (dataScadenza.getMillis()-dataDiOggi.getMillis()) <= 259200000L) c.setBackground(Color.ORANGE);
+					if( (dataScadenza.getMillis()-dataDiOggi.getMillis()) <= ModelPrenotazioni.TRE_GIORNI_IN_MILLIS) c.setBackground(Color.ORANGE);
 					else c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);}
 
 				return c;

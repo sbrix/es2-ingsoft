@@ -40,6 +40,7 @@ public class VistaGestioneViaggiOrganizzati extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("serial")
 	public VistaGestioneViaggiOrganizzati(int uType, int id, final Agenzia ag) {
 		table = new JTable(ag.modelViaggi)
 		{

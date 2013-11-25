@@ -42,6 +42,7 @@ public class VistaGestioneVoli extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("serial")
 	public VistaGestioneVoli(int uType, int id, final Agenzia ag) {
 		model = ag.modelVoli;
 		table = new JTable(model){

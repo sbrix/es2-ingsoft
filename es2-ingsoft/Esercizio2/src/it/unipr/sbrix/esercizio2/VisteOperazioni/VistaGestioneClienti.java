@@ -45,17 +45,24 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("serial")
 	public VistaGestioneClienti(Agenzia agenzia) {
 
 		ag = agenzia;
-		// ag.modelClienti = new ModelUtenti(ModelUtenti.INIT_CLIENTE);
 		model = ag.modelClienti;
+		table = new JTable(model){
+			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
+			{
+				Component c = super.prepareRenderer(renderer, row, column);
 
-		/*
-		 * for(Utente i:ag.listaUtenti){ modelUtenti.addRow(i); }
-		 */
+				//  Alternate row color
 
-		// setLayout(new GridLayout(1, 2, 0, 0));
+				if (!isRowSelected(row))
+					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
+
+				return c;
+			}
+		};
 
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 780, 70, 0 };
@@ -89,19 +96,7 @@ public class VistaGestioneClienti extends JPanel implements ActionListener {
 
 		panelList.add(scrollPane);
 
-		table = new JTable(model){
-			public Component prepareRenderer(TableCellRenderer renderer, int row, int column)
-			{
-				Component c = super.prepareRenderer(renderer, row, column);
-
-				//  Alternate row color
-
-				if (!isRowSelected(row))
-					c.setBackground(row % 2 == 0 ? getBackground() : Color.LIGHT_GRAY);
-
-				return c;
-			}
-		};
+		
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 
 		scrollPane.setViewportView(table);

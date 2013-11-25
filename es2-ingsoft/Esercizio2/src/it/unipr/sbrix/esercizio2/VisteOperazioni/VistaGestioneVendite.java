@@ -46,6 +46,7 @@ public class VistaGestioneVendite extends JPanel {
 	/**
 	 * Create the panel.
 	 */
+	@SuppressWarnings("serial")
 	public VistaGestioneVendite(int uType, int id, final Agenzia ag) {
 
 		table = new JTable(ag.modelVendite){
