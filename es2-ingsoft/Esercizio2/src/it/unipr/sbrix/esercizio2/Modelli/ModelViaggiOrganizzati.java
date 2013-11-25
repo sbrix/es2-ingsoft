@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.event.EventListenerList;
 
@@ -141,6 +142,15 @@ public class ModelViaggiOrganizzati extends RowTableModel<ViaggioOrganizzato>
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Collections.sort(listaViaggiOrganizzati);
+		int index =0;
+		for(ViaggioOrganizzato i:listaViaggiOrganizzati){
+			i.setId(index);
+			index++;
+		}
+		this.idGlobaleViaggiOrganizzati=index;
+		Agenzia.saveToFile(fileViaggiOrganizzati, listaViaggiOrganizzati);
+		Agenzia.saveToFile(fileIdViaggiOrganizzati, this.idGlobaleViaggiOrganizzati);
 
 	}
 

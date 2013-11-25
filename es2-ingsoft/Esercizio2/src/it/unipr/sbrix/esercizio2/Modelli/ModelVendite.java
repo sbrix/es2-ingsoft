@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.event.EventListenerList;
 
@@ -149,6 +150,15 @@ public class ModelVendite extends RowTableModel<Vendita> implements EditModel,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Collections.sort(listaVendite);
+		int index =0;
+		for(Vendita i:listaVendite){
+			i.setId(index);
+			index++;
+		}
+		this.idGlobaleVendite=index;
+		Agenzia.saveToFile(fileVendite, listaVendite);
+		Agenzia.saveToFile(fileIdVendite, this.idGlobaleVendite);
 
 	}
 

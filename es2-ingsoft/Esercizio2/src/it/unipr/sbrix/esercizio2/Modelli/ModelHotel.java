@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.event.EventListenerList;
 
@@ -168,6 +169,15 @@ public class ModelHotel extends RowTableModel<Hotel> implements InitModel,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Collections.sort(listaHotel);
+		int index = 0;
+		for(Hotel i:listaHotel){
+			i.setId(index);
+			index++;
+		}
+		this.idGlobaleHotel=index;
+		Agenzia.saveToFile(fileHotel, listaHotel);
+		Agenzia.saveToFile(fileIdHotel, this.idGlobaleHotel);
 
 	}
 

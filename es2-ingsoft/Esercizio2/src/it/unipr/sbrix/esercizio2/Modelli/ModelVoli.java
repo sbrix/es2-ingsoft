@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import javax.swing.event.EventListenerList;
 
@@ -151,6 +152,15 @@ public class ModelVoli extends RowTableModel<Volo> implements InitModel,
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		Collections.sort(listaVoli);
+		int index = 0;
+		for(Volo i:listaVoli){
+			i.setId(index);
+			index++;
+		}
+		this.idVoli=index;
+		Agenzia.saveToFile(fileVoli, listaVoli);
+		Agenzia.saveToFile(fileIdVoli, this.idVoli);
 
 	}
 

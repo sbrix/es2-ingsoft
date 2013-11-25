@@ -9,8 +9,11 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 
 import javax.swing.event.EventListenerList;
+
+import org.joda.time.DateTime;
 
 import it.unipr.sbrix.esercizio2.Agenzia;
 import it.unipr.sbrix.esercizio2.Prenotazione;
@@ -78,9 +81,13 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 		case 10:
 			return prenotazione.idOperatore;
 		case 11:
-			return prenotazione.cliente.toString();
-		case 12:
-			return prenotazione.scadenza;
+			return new String(prenotazione.cliente.nome+" "+prenotazione.cliente.cognome);
+		case 12:{
+			DateTime dataScadenza = new DateTime(prenotazione.scadenza);
+			return new String(dataScadenza.getDayOfMonth()+"/"+dataScadenza.getMonthOfYear()+"/"+dataScadenza.getYear());
+			
+		}
+			
 
 		}
 		return null;
@@ -179,6 +186,15 @@ public class ModelPrenotazioni extends RowTableModel<Prenotazione> implements
 			e.printStackTrace();
 		}
 		controllaScadenzaPrenotazioni();
+		Collections.sort(listaPrenotazioni);
+		int index =0;
+		for(Prenotazione i:listaPrenotazioni){
+			i.setId(index);
+			index++;
+		}
+		this.idGlobalePrenotazioni=index;
+		Agenzia.saveToFile(filePrenotazioni, listaPrenotazioni);
+		Agenzia.saveToFile(fileIdPrenotazioni, this.idGlobalePrenotazioni);
 
 	}
 

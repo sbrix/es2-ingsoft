@@ -25,4 +25,6 @@ public class Vendita extends ViaggioOrganizzato implements Serializable {
 				+ ", ritorno=" + ritorno.toString() + ", operatore="
 				+ idOperatore + "]";
 	}
+
+	
 }

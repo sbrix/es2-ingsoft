@@ -58,7 +58,7 @@ public class VistaGestionePrenotazioni extends JPanel {
 			sorter.setModel(ag.modelPrenotazioni);
 			FilterPrenotazioniByUserId IDfilter = new FilterPrenotazioniByUserId();
 			IDfilter.setUserId(id);
-			sorter.setRowFilter(IDfilter);
+			sorter.setRowFilter(IDfilter);//<-------
 			table.setRowSorter(sorter);
 
 		}
